@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Zawadi Careers</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="../assets/zawadi-logo.png" type="image/png">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="logo">
+                    <img src="../assets/zawadi-logo.png" alt="Zawadi Careers Logo">
+                    <span class="logo-text">Zawadi Careers</span>
+                </div>
+                <h1>Start Your Journey</h1>
+                <p>Create your free account to unlock all features</p>
+            </div>
+
+            <form id="signupForm" class="auth-form">
+                <div class="form-group">
+                    <label for="fullName" class="form-label">Full Name</label>
+                    <input type="text" id="fullName" class="form-control" required 
+                           placeholder="John Doe">
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" id="email" class="form-control" required 
+                           placeholder="you@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" class="form-control" required 
+                           placeholder="Create a strong password">
+                    <div class="password-strength">
+                        <div class="strength-meter">
+                            <div class="strength-fill" id="passwordStrength"></div>
+                        </div>
+                        <small class="form-text">Use at least 8 characters with letters and numbers</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password" id="confirmPassword" class="form-control" required 
+                           placeholder="Confirm your password">
+                </div>
+
+                <div class="form-group form-check">
+                    <input type="checkbox" id="terms" class="form-check-input" required>
+                    <label for="terms" class="form-check-label">
+                        I agree to the <a href="#terms">Terms of Service</a> and <a href="#privacy">Privacy Policy</a>
+                    </label>
+                </div>
+
+                <div class="form-group form-check">
+                    <input type="checkbox" id="newsletter" class="form-check-input" checked>
+                    <label for="newsletter" class="form-check-label">
+                        Subscribe to our newsletter for career tips and opportunities
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+
+                <div class="auth-divider">
+                    <span>or sign up with</span>
+                </div>
+
+                <div class="social-auth">
+                    <button type="button" class="btn-social btn-google">
+                        <i class="fab fa-google"></i> Google
+                    </button>
+                    <button type="button" class="btn-social btn-linkedin">
+                        <i class="fab fa-linkedin"></i> LinkedIn
+                    </button>
+                </div>
+
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="login.html">Sign in here</a></p>
+                    <p><a href="../public/index.html"><i class="fas fa-arrow-left"></i> Back to home</a></p>
+                </div>
+            </form>
+        </div>
+
+        <div class="auth-benefits">
+            <h2>Why Join Zawadi Careers?</h2>
+            <ul class="benefits-list">
+                <li><i class="fas fa-compass"></i> Personalized career guidance</li>
+                <li><i class="fas fa-book-open"></i> Track your learning progress</li>
+                <li><i class="fas fa-bell"></i> Get job opportunity alerts</li>
+                <li><i class="fas fa-users"></i> Join our community of professionals</li>
+                <li><i class="fas fa-chart-line"></i> Access career growth resources</li>
+                <li><i class="fas fa-graduation-cap"></i> Free skill development courses</li>
+            </ul>
+
+            <div class="testimonial">
+                <p class="testimonial-text">
+                    "Zawadi Careers helped me transition from student to professional. The guidance was invaluable!"
+                </p>
+                <div class="testimonial-author">
+                    <strong>Sarah K.,</strong> Software Developer
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/supabase.js"></script>
+    <script>
+        // Password strength checker
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const strengthMeter = document.getElementById('passwordStrength');
+            let strength = 0;
+            
+            if (password.length >= 8) strength += 25;
+            if (/[A-Z]/.test(password)) strength += 25;
+            if (/[0-9]/.test(password)) strength += 25;
+            if (/[^A-Za-z0-9]/.test(password)) strength += 25;
+            
+            strengthMeter.style.width = `${strength}%`;
+            strengthMeter.style.backgroundColor = 
+                strength < 50 ? '#EF4444' : 
+                strength < 75 ? '#F59E0B' : '#10B981';
+        });
+
+        // Form submission
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const subscribeNewsletter = document.getElementById('newsletter').checked;
+            
+            // Validation
+            if (password !== confirmPassword) {
+                showError('Passwords do not match');
+                return;
+            }
+            
+            if (password.length < 8) {
+                showError('Password must be at least 8 characters long');
+                return;
+            }
+
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating account...';
+            submitBtn.disabled = true;
+
+            try {
+                const { success, error } = await ZawadiAPI.signUp(email, password, fullName);
+                
+                if (success) {
+                    // Subscribe to newsletter if checked
+                    if (subscribeNewsletter) {
+                        await ZawadiAPI.subscribeNewsletter(email, fullName, 'signup');
+                    }
+                    
+                    // Show success message
+                    const successMsg = document.createElement('div');
+                    successMsg.className = 'alert alert-success';
+                    successMsg.innerHTML = `
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Account created successfully!</strong>
+                            <p>Please check your email to verify your account.</p>
+                        </div>
+                    `;
+                    document.querySelector('.auth-form').prepend(successMsg);
+                    
+                    // Redirect to login page after delay
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 3000);
+                } else {
+                    showError(error || 'Failed to create account. Please try again.');
+                    submitBtn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
+                    submitBtn.disabled = false;
+                }
+            } catch (error) {
+                showError('An error occurred. Please try again.');
+                submitBtn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
+                submitBtn.disabled = false;
+            }
+        });
+
+        function showError(message) {
+            // Remove existing error
+            const existingError = document.querySelector('.alert-error');
+            if (existingError) existingError.remove();
+            
+            const errorMsg = document.createElement('div');
+            errorMsg.className = 'alert alert-error';
+            errorMsg.innerHTML = `
+                <i class="fas fa-exclamation-circle"></i>
+                <span>${message}</span>
+            `;
+            document.querySelector('.auth-form').prepend(errorMsg);
+            
+            // Scroll to error
+            errorMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Add testimonial styles
+        const testimonialStyles = document.createElement('style');
+        testimonialStyles.textContent = `
+            .testimonial {
+                background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+                color: white;
+                padding: var(--spacing-xl);
+                border-radius: var(--radius-lg);
+                margin-top: var(--spacing-2xl);
+            }
+
+            .testimonial-text {
+                font-style: italic;
+                margin-bottom: var(--spacing-md);
+                font-size: 1.125rem;
+            }
+
+            .testimonial-author {
+                text-align: right;
+                font-size: 0.875rem;
+                opacity: 0.9;
+            }
+
+            .password-strength {
+                margin-top: var(--spacing-xs);
+            }
+
+            .strength-meter {
+                height: 4px;
+                background: var(--border-color);
+                border-radius: 2px;
+                margin-bottom: var(--spacing-xs);
+                overflow: hidden;
+            }
+
+            .strength-fill {
+                height: 100%;
+                width: 0%;
+                transition: width 0.3s ease, background-color 0.3s ease;
+                border-radius: 2px;
+            }
+        `;
+        document.head.appendChild(testimonialStyles);
+    </script>
+</body>
+</html>
