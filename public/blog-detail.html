@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Title - Zawadi Careers</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="../assets/zawadi-logo.png" type="image/png">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">
+                <img src="../assets/zawadi-logo.png" alt="Zawadi Careers Logo">
+                <span class="logo-text">Zawadi Careers</span>
+            </div>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="../public/index.html">Home</a>
+                <a href="../public/blog.html" class="active">Blog</a>
+                <a href="../public/categories.html">Categories</a>
+                <a href="#opportunities">Opportunities</a>
+                <a href="#resources">Resources</a>
+                <a href="#about">About</a>
+            </div>
+            
+            <div class="nav-actions" id="authLinks">
+                <!-- Filled by JavaScript -->
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="blog-detail-container">
+        <!-- Blog Navigation -->
+        <div class="blog-navigation">
+            <a href="../public/blog.html" class="nav-back">
+                <i class="fas fa-arrow-left"></i> Back to Blogs
+            </a>
+            <div class="reading-progress" id="readingProgress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <span id="progressText">0% read</span>
+            </div>
+        </div>
+
+        <!-- Blog Header -->
+        <article class="blog-article">
+            <header class="blog-header">
+                <div class="blog-category" id="blogCategory">
+                    <!-- Filled by JavaScript -->
+                </div>
+                <h1 class="blog-title" id="blogTitle">Loading...</h1>
+                <div class="blog-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-user"></i>
+                        <span id="blogAuthor">Zawadi Team</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="far fa-clock"></i>
+                        <span id="blogDate">Loading...</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="far fa-eye"></i>
+                        <span id="blogViews">0</span> views
+                    </div>
+                    <div class="meta-item">
+                        <i class="far fa-clock"></i>
+                        <span id="readingTime">5</span> min read
+                    </div>
+                </div>
+            </header>
+
+            <!-- Cover Image -->
+            <div class="blog-cover" id="blogCover">
+                <!-- Filled by JavaScript -->
+            </div>
+
+            <!-- Excerpt -->
+            <div class="blog-excerpt" id="blogExcerpt">
+                <!-- Filled by JavaScript -->
+            </div>
+
+            <!-- Blog Sections -->
+            <div class="blog-sections" id="blogSections">
+                <!-- Sections loaded dynamically -->
+            </div>
+
+            <!-- Section Navigation -->
+            <div class="section-navigation" id="sectionNav">
+                <button id="prevSection" class="btn btn-outline" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <div class="section-counter">
+                    Section <span id="currentSection">1</span> of <span id="totalSections">1</span>
+                </div>
+                <button id="nextSection" class="btn btn-primary">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <!-- Like Button -->
+            <div class="blog-actions">
+                <button id="likeButton" class="btn-like">
+                    <i class="far fa-heart"></i>
+                    <span id="likeCount">0</span> Likes
+                </button>
+                <button class="btn-share" onclick="shareBlog()">
+                    <i class="fas fa-share-alt"></i> Share
+                </button>
+            </div>
+
+            <!-- Author Bio -->
+            <div class="author-bio" id="authorBio">
+                <!-- Filled by JavaScript -->
+            </div>
+        </article>
+
+        <!-- Comments Section -->
+        <section class="comments-section">
+            <h2>Comments</h2>
+            <div class="comments-count" id="commentsCount">
+                0 Comments
+            </div>
+
+            <!-- Add Comment Form -->
+            <div class="add-comment">
+                <h3>Add Your Thoughts</h3>
+                <form id="commentForm">
+                    <div class="form-group">
+                        <textarea id="commentContent" class="form-control" 
+                                  placeholder="Share your thoughts on this article..." 
+                                  rows="4" required></textarea>
+                    </div>
+                    
+                    <div id="guestFields" style="display: none;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" id="commentName" class="form-control" 
+                                       placeholder="Your Name">
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="commentEmail" class="form-control" 
+                                       placeholder="Your Email (optional)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Post Comment
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Comments List -->
+            <div class="comments-list" id="commentsList">
+                <!-- Comments loaded dynamically -->
+            </div>
+        </section>
+
+        <!-- Related Blogs -->
+        <section class="related-blogs" id="relatedBlogs">
+            <h2>You Might Also Like</h2>
+            <div class="blogs-grid">
+                <!-- Related blogs loaded dynamically -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav">
+        <div class="mobile-nav-items">
+            <a href="../public/index.html" class="mobile-nav-item">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="../public/blog.html" class="mobile-nav-item active">
+                <i class="fas fa-newspaper"></i>
+                <span>Blog</span>
+            </a>
+            <a href="../public/categories.html" class="mobile-nav-item">
+                <i class="fas fa-folder"></i>
+                <span>Categories</span>
+            </a>
+            <a href="user-dashboard.html" class="mobile-nav-item">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
+        </div>
+    </nav>
+
+    <script src="../js/supabase.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        let currentBlog = null;
+        let currentSections = [];
+        let currentSectionIndex = 0;
+        let isLiked = false;
+        let likeCount = 0;
+        let user = null;
+
+        // Initialize blog
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Get blog slug from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const slug = urlParams.get('slug');
+            
+            if (!slug) {
+                window.location.href = 'blog.html';
+                return;
+            }
+
+            // Load blog data
+            await loadBlog(slug);
+            
+            // Check auth status
+            user = await ZawadiAPI.checkAuth();
+            updateCommentForm();
+            
+            // Load comments
+            await loadComments();
+            
+            // Check like status
+            await checkLikeStatus();
+            
+            // Load related blogs
+            await loadRelatedBlogs();
+            
+            // Initialize reading progress
+            initReadingProgress();
+            
+            // Update reading progress periodically
+            setInterval(updateReadingTime, 60000); // Every minute
+        });
+
+        async function loadBlog(slug) {
+            try {
+                const { success, data, error } = await ZawadiAPI.getBlogBySlug(slug);
+                
+                if (success && data) {
+                    currentBlog = data;
+                    currentSections = data.blog_sections || [];
+                    
+                    // Update page title
+                    document.title = `${data.title} - Zawadi Careers`;
+                    
+                    // Update blog header
+                    document.getElementById('blogTitle').textContent = data.title;
+                    document.getElementById('blogAuthor').textContent = data.admins?.full_name || 'Zawadi Team';
+                    document.getElementById('blogDate').textContent = formatDate(data.published_at);
+                    document.getElementById('blogViews').textContent = data.views || 0;
+                    document.getElementById('readingTime').textContent = data.reading_time || 5;
+                    document.getElementById('likeCount').textContent = data.likes || 0;
+                    likeCount = data.likes || 0;
+                    
+                    // Update category
+                    const categoryElement = document.getElementById('blogCategory');
+                    if (data.categories) {
+                        categoryElement.innerHTML = `
+                            <span class="category-badge" style="background: ${data.categories.color || 'var(--primary-color)'}">
+                                ${data.categories.name}
+                            </span>
+                        `;
+                    }
+                    
+                    // Update cover image
+                    if (data.cover_image) {
+                        document.getElementById('blogCover').innerHTML = `
+                            <img src="${data.cover_image}" alt="${data.title}">
+                        `;
+                    }
+                    
+                    // Update excerpt
+                    if (data.excerpt) {
+                        document.getElementById('blogExcerpt').innerHTML = `
+                            <p class="lead">${data.excerpt}</p>
+                        `;
+                    }
+                    
+                    // Update author bio
+                    document.getElementById('authorBio').innerHTML = `
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h3>${data.admins?.full_name || 'Zawadi Team'}</h3>
+                            <p>Career expert at Zawadi Careers, dedicated to helping Africans achieve their professional dreams.</p>
+                        </div>
+                    `;
+                    
+                    // Load sections
+                    loadSections();
+                    
+                    // Update section navigation
+                    updateSectionNavigation();
+                } else {
+                    showNotification(error || 'Blog not found', 'error');
+                    setTimeout(() => {
+                        window.location.href = 'blog.html';
+                    }, 2000);
+                }
+            } catch (error) {
+                console.error('Error loading blog:', error);
+                showNotification('Error loading blog. Please try again.', 'error');
+            }
+        }
+
+        function loadSections() {
+            const sectionsContainer = document.getElementById('blogSections');
+            
+            if (!currentSections || currentSections.length === 0) {
+                sectionsContainer.innerHTML = `
+                    <div class="no-sections">
+                        <p>No content available for this blog.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            sectionsContainer.innerHTML = currentSections.map((section, index) => `
+                <div class="blog-section ${index === 0 ? 'active' : ''}" data-section-index="${index}">
+                    ${section.title ? `<h2>${section.title}</h2>` : ''}
+                    
+                    ${section.content_type === 'text' ? `
+                        <div class="section-content">
+                            ${section.content.split('\n').map(p => `<p>${p}</p>`).join('')}
+                        </div>
+                    ` : section.content_type === 'image' ? `
+                        <div class="section-media">
+                            <img src="${section.media_url || section.content}" alt="${section.media_caption || ''}">
+                            ${section.media_caption ? `<p class="media-caption">${section.media_caption}</p>` : ''}
+                        </div>
+                    ` : section.content_type === 'video' ? `
+                        <div class="section-media">
+                            <div class="video-container">
+                                ${embedVideo(section.media_url || section.content)}
+                            </div>
+                            ${section.media_caption ? `<p class="media-caption">${section.media_caption}</p>` : ''}
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        function embedVideo(url) {
+            // Simple YouTube embed detection
+            if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                const videoId = extractYouTubeId(url);
+                if (videoId) {
+                    return `
+                        <iframe src="https://www.youtube.com/embed/${videoId}" 
+                                frameborder="0" 
+                                allowfullscreen></iframe>
+                    `;
+                }
+            }
+            
+            // Vimeo embed detection
+            if (url.includes('vimeo.com')) {
+                const videoId = url.split('/').pop();
+                return `
+                    <iframe src="https://player.vimeo.com/video/${videoId}" 
+                            frameborder="0" 
+                            allowfullscreen></iframe>
+                `;
+            }
+            
+            // Generic video embed
+            return `
+                <video controls style="width: 100%;">
+                    <source src="${url}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            `;
+        }
+
+        function extractYouTubeId(url) {
+            const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[7].length == 11) ? match[7] : false;
+        }
+
+        function updateSectionNavigation() {
+            const totalSections = currentSections.length;
+            document.getElementById('totalSections').textContent = totalSections;
+            document.getElementById('currentSection').textContent = currentSectionIndex + 1;
+            
+            // Update button states
+            document.getElementById('prevSection').disabled = currentSectionIndex === 0;
+            document.getElementById('nextSection').disabled = currentSectionIndex === totalSections - 1;
+            
+            // Update progress
+            updateReadingProgressBar();
+        }
+
+        function showSection(index) {
+            // Hide all sections
+            document.querySelectorAll('.blog-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            const targetSection = document.querySelector(`[data-section-index="${index}"]`);
+            if (targetSection) {
+                targetSection.classList.add('active');
+                
+                // Scroll to section
+                targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                // Update current index
+                currentSectionIndex = index;
+                updateSectionNavigation();
+                
+                // Save reading progress
+                saveReadingProgress();
+            }
+        }
+
+        // Navigation button handlers
+        document.getElementById('prevSection').addEventListener('click', () => {
+            if (currentSectionIndex > 0) {
+                showSection(currentSectionIndex - 1);
+            }
+        });
+
+        document.getElementById('nextSection').addEventListener('click', () => {
+            if (currentSectionIndex < currentSections.length - 1) {
+                showSection(currentSectionIndex + 1);
+            }
+        });
+
+        function initReadingProgress() {
+            // Load existing progress if user is logged in
+            if (user && currentBlog) {
+                loadReadingProgress();
+            }
+            
+            // Setup scroll tracking for progress bar
+            window.addEventListener('scroll', updateReadingProgressBar);
+        }
+
+        async function loadReadingProgress() {
+            // This would load from user's reading progress
+            // For now, start from beginning
+            currentSectionIndex = 0;
+            showSection(0);
+        }
+
+        function updateReadingProgressBar() {
+            const totalSections = currentSections.length;
+            const progress = totalSections > 0 ? ((currentSectionIndex + 1) / totalSections) * 100 : 0;
+            
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            document.getElementById('progressText').textContent = `${Math.round(progress)}% read`;
+        }
+
+        async function saveReadingProgress() {
+            if (user && currentBlog && currentSections.length > 0) {
+                await ZawadiAPI.updateReadingProgress(
+                    currentBlog.id,
+                    currentSectionIndex,
+                    currentSections.length
+                );
+            }
+        }
+
+        async function updateReadingTime() {
+            if (user && currentBlog) {
+                // Increment time spent by 1 minute
+                await ZawadiAPI.updateReadingProgress(
+                    currentBlog.id,
+                    currentSectionIndex,
+                    currentSections.length,
+                    60 // Add 60 seconds
+                );
+            }
+        }
+
+        async function checkLikeStatus() {
+            if (!currentBlog) return;
+            
+            const { success, liked } = await ZawadiAPI.checkBlogLike(currentBlog.id);
+            if (success) {
+                isLiked = liked;
+                updateLikeButton();
+            }
+        }
+
+        function updateLikeButton() {
+            const likeBtn = document.getElementById('likeButton');
+            const icon = likeBtn.querySelector('i');
+            const countSpan = likeBtn.querySelector('span');
+            
+            if (isLiked) {
+                icon.className = 'fas fa-heart';
+                likeBtn.classList.add('liked');
+            } else {
+                icon.className = 'far fa-heart';
+                likeBtn.classList.remove('liked');
+            }
+            
+            countSpan.textContent = likeCount;
+        }
+
+        // Like button handler
+        document.getElementById('likeButton').addEventListener('click', async () => {
+            if (!currentBlog) return;
+            
+            if (!user) {
+                showNotification('Please sign in to like articles', 'error');
+                return;
+            }
+            
+            const { success, liked, error } = await ZawadiAPI.toggleBlogLike(currentBlog.id);
+            
+            if (success) {
+                isLiked = liked;
+                likeCount = liked ? likeCount + 1 : Math.max(0, likeCount - 1);
+                updateLikeButton();
+            } else {
+                showNotification(error || 'Failed to update like', 'error');
+            }
+        });
+
+        function updateCommentForm() {
+            const guestFields = document.getElementById('guestFields');
+            
+            if (user) {
+                // User is logged in
+                guestFields.style.display = 'none';
+            } else {
+                // Guest user
+                guestFields.style.display = 'block';
+            }
+        }
+
+        // Comment form handler
+        document.getElementById('commentForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const content = document.getElementById('commentContent').value.trim();
+            if (!content) {
+                showNotification('Please enter a comment', 'error');
+                return;
+            }
+            
+            if (!user) {
+                const name = document.getElementById('commentName').value.trim();
+                if (!name) {
+                    showNotification('Please enter your name', 'error');
+                    return;
+                }
+            }
+            
+            const commentData = {
+                content
+            };
+            
+            if (!user) {
+                commentData.name = document.getElementById('commentName').value.trim();
+                commentData.email = document.getElementById('commentEmail').value.trim() || null;
+            }
+            
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Posting...';
+            submitBtn.disabled = true;
+            
+            try {
+                const { success, error } = await ZawadiAPI.addComment(currentBlog.id, commentData);
+                
+                if (success) {
+                    showNotification('Comment posted successfully! It will appear after moderation.', 'success');
+                    document.getElementById('commentForm').reset();
+                    await loadComments(); // Reload comments
+                } else {
+                    showNotification(error || 'Failed to post comment', 'error');
+                }
+            } catch (error) {
+                showNotification('Error posting comment. Please try again.', 'error');
+            } finally {
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Post Comment';
+                submitBtn.disabled = false;
+            }
+        });
+
+        async function loadComments() {
+            if (!currentBlog) return;
+            
+            try {
+                const { success, data } = await ZawadiAPI.getComments(currentBlog.id);
+                
+                const commentsList = document.getElementById('commentsList');
+                const commentsCount = document.getElementById('commentsCount');
+                
+                if (success && data && data.length > 0) {
+                    commentsCount.textContent = `${data.length} Comment${data.length !== 1 ? 's' : ''}`;
+                    
+                    commentsList.innerHTML = data.map(comment => `
+                        <div class="comment">
+                            <div class="comment-avatar">
+                                ${comment.user_id ? 
+                                    `<i class="fas fa-user"></i>` : 
+                                    `<i class="fas fa-user-circle"></i>`
+                                }
+                            </div>
+                            <div class="comment-content">
+                                <div class="comment-header">
+                                    <span class="comment-author">
+                                        ${comment.users?.full_name || comment.user_name || 'Anonymous'}
+                                    </span>
+                                    <span class="comment-time">
+                                        ${formatTimeAgo(comment.created_at)}
+                                    </span>
+                                </div>
+                                <div class="comment-text">
+                                    ${comment.content}
+                                </div>
+                                <div class="comment-actions">
+                                    <button class="btn-like" onclick="likeComment('${comment.id}')">
+                                        <i class="far fa-thumbs-up"></i> ${comment.likes || 0}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    commentsCount.textContent = '0 Comments';
+                    commentsList.innerHTML = `
+                        <div class="no-comments">
+                            <p>No comments yet. Be the first to share your thoughts!</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error loading comments:', error);
+            }
+        }
+
+        async function loadRelatedBlogs() {
+            if (!currentBlog) return;
+            
+            try {
+                const { success, data } = await ZawadiAPI.getPublishedBlogs(3);
+                
+                if (success && data) {
+                    const relatedContainer = document.querySelector('.related-blogs .blogs-grid');
+                    
+                    // Filter out current blog
+                    const relatedBlogs = data.filter(blog => blog.id !== currentBlog.id);
+                    
+                    if (relatedBlogs.length > 0) {
+                        relatedContainer.innerHTML = relatedBlogs.map(blog => `
+                            <article class="blog-card">
+                                <a href="blog-detail.html?slug=${blog.slug}">
+                                    <div class="blog-image">
+                                        <img src="${blog.cover_image || 'assets/images/default-blog.jpg'}" alt="${blog.title}">
+                                    </div>
+                                    <div class="blog-content">
+                                        <div class="blog-meta">
+                                            <span class="blog-category">${blog.categories?.name || 'General'}</span>
+                                            <span class="blog-date">${formatDate(blog.published_at)}</span>
+                                        </div>
+                                        <h3 class="blog-title">${blog.title}</h3>
+                                        <p class="blog-excerpt">${truncateText(blog.excerpt || '', 100)}</p>
+                                        <div class="blog-footer">
+                                            <div class="read-time">
+                                                <i class="far fa-clock"></i> ${blog.reading_time || 5} min read
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </article>
+                        `).join('');
+                    } else {
+                        document.getElementById('relatedBlogs').style.display = 'none';
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading related blogs:', error);
+            }
+        }
+
+        function shareBlog() {
+            if (navigator.share) {
+                navigator.share({
+                    title: currentBlog.title,
+                    text: currentBlog.excerpt,
+                    url: window.location.href,
+                });
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(window.location.href);
+                showNotification('Link copied to clipboard!', 'success');
+            }
+        }
+
+        // Utility functions from main.js
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        function formatTimeAgo(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMins / 60);
+            const diffDays = Math.floor(diffHours / 24);
+
+            if (diffMins < 1) return 'Just now';
+            if (diffMins < 60) return `${diffMins} min ago`;
+            if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+            if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+            
+            return date.toLocaleDateString();
+        }
+
+        function truncateText(text, maxLength) {
+            if (text.length <= maxLength) return text;
+            return text.substr(0, maxLength) + '...';
+        }
+
+        // Add blog detail specific styles
+        const blogDetailStyles = document.createElement('style');
+        blogDetailStyles.textContent = `
+            .blog-detail-container {
+                max-width: 800px;
+                margin: 80px auto 0;
+                padding: var(--spacing-xl);
+            }
+
+            .blog-navigation {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: var(--spacing-xl);
+                padding-bottom: var(--spacing-md);
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .nav-back {
+                display: flex;
+                align-items: center;
+                gap: var(--spacing-sm);
+                color: var(--text-secondary);
+            }
+
+            .reading-progress {
+                display: flex;
+                align-items: center;
+                gap: var(--spacing-md);
+            }
+
+            .progress-bar {
+                width: 200px;
+                height: 4px;
+                background: var(--border-color);
+                border-radius: 2px;
+                overflow: hidden;
+            }
+
+            .progress-fill {
+                height: 100%;
+                background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+                width: 0%;
+                transition: width 0.3s ease;
+            }
+
+            .blog-article {
+                margin-bottom: var(--spacing-2xl);
+            }
+
+            .blog-header {
+                text-align: center;
+                margin-bottom: var(--spacing-2xl);
+            }
+
+            .category-badge {
+                display: inline-block;
+                padding: var(--spacing-xs) var(--spacing-md);
+                border-radius: var(--radius-sm);
+                color: white;
+                font-weight: 600;
+                font-size: 0.875rem;
+                margin-bottom: var(--spacing-md);
+            }
+
+            .blog-title {
+                font-size: 2.5rem;
+                line-height: 1.2;
+                margin-bottom: var(--spacing-md);
+            }
+
+            .blog-meta {
+                display: flex;
+                justify-content: center;
+                gap: var(--spacing-xl);
+                color: var(--text-tertiary);
+                font-size: 0.875rem;
+                flex-wrap: wrap;
+            }
+
+            .meta-item {
+                display: flex;
+                align-items: center;
+                gap: var(--spacing-xs);
+            }
+
+            .blog-cover {
+                margin: var(--spacing-2xl) 0;
+                border-radius: var(--radius-lg);
+                overflow: hidden;
+            }
+
+            .blog-cover img {
+                width: 100%;
+                height: auto;
+                border-radius: var(--radius-lg);
+            }
+
+            .blog-excerpt {
+                font-size: 1.125rem;
+                line-height: 1.6;
+                color: var(--text-secondary);
+                margin-bottom: var(--spacing-2xl);
+                padding: var(--spacing-lg);
+                background: var(--surface-color);
+                border-radius: var(--radius-lg);
+            }
+
+            .blog-section {
+                display: none;
+                margin-bottom: var(--spacing-2xl);
+            }
+
+            .blog-section.active {
+                display: block;
+                animation: fadeIn 0.5s ease;
+            }
+
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
+            .blog-section h2 {
+                font-size: 1.75rem;
+                margin-bottom: var(--spacing-lg);
+                color: var(--text-primary);
+            }
+
+            .section-content {
+                line-height: 1.8;
+                font-size: 1.125rem;
+            }
+
+            .section-content p {
+                margin-bottom: var(--spacing-lg);
+            }
+
+            .section-media {
+                margin: var(--spacing-xl) 0;
+            }
+
+            .section-media img {
+                width: 100%;
+                border-radius: var(--radius-lg);
+            }
+
+            .media-caption {
+                text-align: center;
+                font-style: italic;
+                color: var(--text-tertiary);
+                margin-top: var(--spacing-sm);
+                font-size: 0.875rem;
+            }
+
+            .video-container {
+                position: relative;
+                padding-bottom: 56.25%; /* 16:9 */
+                height: 0;
+                overflow: hidden;
+                border-radius: var(--radius-lg);
+            }
+
+            .video-container iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border: 0;
+            }
+
+            .section-navigation {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin: var(--spacing-2xl) 0;
+                padding: var(--spacing-lg);
+                background: var(--surface-color);
+                border-radius: var(--radius-lg);
+            }
+
+            .section-counter {
+                font-weight: 600;
+                color: var(--text-primary);
+            }
+
+            .blog-actions {
+                display: flex;
+                gap: var(--spacing-md);
+                justify-content: center;
+                margin: var(--spacing-2xl) 0;
+            }
+
+            .btn-like {
+                display: flex;
+                align-items: center;
+                gap: var(--spacing-sm);
+                padding: var(--spacing-md) var(--spacing-xl);
+                border: 2px solid var(--border-color);
+                border-radius: var(--radius-md);
+                background: white;
+                color: var(--text-secondary);
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .btn-like:hover {
+                border-color: var(--error-color);
+                color: var(--error-color);
+            }
+
+            .btn-like.liked {
+                border-color: var(--error-color);
+                color: var(--error-color);
+                background: rgba(239, 68, 68, 0.05);
+            }
+
+            .btn-share {
+                display: flex;
+                align-items: center;
+                gap: var(--spacing-sm);
+                padding: var(--spacing-md) var(--spacing-xl);
+                border: 2px solid var(--border-color);
+                border-radius: var(--radius-md);
+                background: white;
+                color: var(--text-secondary);
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .btn-share:hover {
+                border-color: var(--primary-color);
+                color: var(--primary-color);
+            }
+
+            .author-bio {
+                display: flex;
+                gap: var(--spacing-lg);
+                padding: var(--spacing-xl);
+                background: var(--surface-color);
+                border-radius: var(--radius-lg);
+                margin: var(--spacing-2xl) 0;
+            }
+
+            .author-avatar {
+                width: 64px;
+                height: 64px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-size: 1.5rem;
+                flex-shrink: 0;
+            }
+
+            .author-info h3 {
+                font-size: 1.25rem;
+                margin-bottom: var(--spacing-xs);
+            }
+
+            .author-info p {
+                color: var(--text-secondary);
+                margin: 0;
+            }
+
+            .comments-section {
+                margin: var(--spacing-2xl) 0;
+            }
+
+            .comments-count {
+                color: var(--text-tertiary);
+                margin-bottom: var(--spacing-xl);
+            }
+
+            .add-comment {
+                background: var(--surface-color);
+                padding: var(--spacing-xl);
+                border-radius: var(--radius-lg);
+                margin-bottom: var(--spacing-xl);
+            }
+
+            .form-row {
+                display: flex;
+                gap: var(--spacing-md);
+                margin-bottom: var(--spacing-md);
+            }
+
+            .form-row .form-group {
+                flex: 1;
+            }
+
+            .form-actions {
+                display: flex;
+                justify-content: flex-end;
+            }
+
+            .comments-list {
+                display: flex;
+                flex-direction: column;
+                gap: var(--spacing-lg);
+            }
+
+            .comment {
+                display: flex;
+                gap: var(--spacing-lg);
+                padding: var(--spacing-lg);
+                background: white;
+                border-radius: var(--radius-lg);
+                box-shadow: var(--shadow-sm);
+            }
+
+            .comment-avatar {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: var(--surface-color);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--text-tertiary);
+                flex-shrink: 0;
+            }
+
+            .comment-content {
+                flex: 1;
+            }
+
+            .comment-header {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: var(--spacing-sm);
+            }
+
+            .comment-author {
+                font-weight: 600;
+                color: var(--text-primary);
+            }
+
+            .comment-time {
+                font-size: 0.875rem;
+                color: var(--text-tertiary);
+            }
+
+            .comment-text {
+                line-height: 1.6;
+                color: var(--text-secondary);
+                margin-bottom: var(--spacing-md);
+            }
+
+            .comment-actions {
+                display: flex;
+                gap: var(--spacing-md);
+            }
+
+            .related-blogs {
+                margin: var(--spacing-2xl) 0;
+            }
+
+            @media (max-width: 768px) {
+                .blog-detail-container {
+                    padding: var(--spacing-md);
+                    margin-top: 60px;
+                }
+
+                .blog-title {
+                    font-size: 2rem;
+                }
+
+                .blog-meta {
+                    flex-direction: column;
+                    gap: var(--spacing-sm);
+                    align-items: center;
+                }
+
+                .section-navigation {
+                    flex-direction: column;
+                    gap: var(--spacing-md);
+                }
+
+                .form-row {
+                    flex-direction: column;
+                }
+
+                .author-bio {
+                    flex-direction: column;
+                    text-align: center;
+                }
+
+                .author-avatar {
+                    align-self: center;
+                }
+            }
+        `;
+        document.head.appendChild(blogDetailStyles);
+    </script>
+</body>
+</html>
