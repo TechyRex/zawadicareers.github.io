@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Categories - Zawadi Careers</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="../assets/zawadi-logo.png" type="image/png">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">
+                <img src="../assets/zawadi-logo.png" alt="Zawadi Careers Logo">
+                <span class="logo-text">Zawadi Careers</span>
+            </div>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="../public/index.html">Home</a>
+                <a href="blog.html">Blog</a>
+                <a href="categories.html" class="active">Categories</a>
+                <a href="#opportunities">Opportunities</a>
+                <a href="#resources">Resources</a>
+                <a href="#about">About</a>
+            </div>
+            
+            <div class="nav-actions" id="authLinks">
+                <!-- Filled by JavaScript -->
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Categories Header -->
+    <section class="categories-header">
+        <div class="container">
+            <h1>Explore Career Pathways</h1>
+            <p class="subtitle">Structured content tailored to your career stage and needs. Choose a category to begin your journey.</p>
+        </div>
+    </section>
+
+    <!-- Categories Grid -->
+    <main class="categories-main">
+        <div class="container">
+            <div class="categories-grid" id="categoriesGrid">
+                <!-- Categories loaded dynamically -->
+            </div>
+            
+            <!-- How It Works -->
+            <section class="how-it-works">
+                <h2>How to Use These Categories</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Identify Your Stage</h3>
+                        <p>Determine where you are in your career journey</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Choose Relevant Categories</h3>
+                        <p>Focus on categories that match your current needs</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Explore Content</h3>
+                        <p>Read articles and resources in your chosen categories</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3>Take Action</h3>
+                        <p>Apply insights and strategies to your career</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Career Stages -->
+            <section class="career-stages">
+                <h2>Career Stages & Recommended Categories</h2>
+                <div class="stages-grid">
+                    <div class="stage-card">
+                        <div class="stage-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h3>Students & Graduates</h3>
+                        <ul class="stage-categories">
+                            <li>Career Clarity & Exploration</li>
+                            <li>Skill Development & Learning</li>
+                            <li>Opportunities & Openings</li>
+                        </ul>
+                        <a href="#student-resources" class="btn btn-outline btn-sm">Explore Resources</a>
+                    </div>
+                    
+                    <div class="stage-card">
+                        <div class="stage-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <h3>Job Seekers</h3>
+                        <ul class="stage-categories">
+                            <li>Job Search & Career Advancement</li>
+                            <li>Opportunities & Openings</li>
+                            <li>Stories, Mentorship & Insights</li>
+                        </ul>
+                        <a href="#job-seeker-resources" class="btn btn-outline btn-sm">Explore Resources</a>
+                    </div>
+                    
+                    <div class="stage-card">
+                        <div class="stage-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Professionals</h3>
+                        <ul class="stage-categories">
+                            <li>Professionals & Leadership</li>
+                            <li>Skill Development & Learning</li>
+                            <li>Companies & Employers</li>
+                        </ul>
+                        <a href="#professional-resources" class="btn btn-outline btn-sm">Explore Resources</a>
+                    </div>
+                    
+                    <div class="stage-card">
+                        <div class="stage-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <h3>Employers</h3>
+                        <ul class="stage-categories">
+                            <li>Companies & Employers</li>
+                            <li>Professionals & Leadership</li>
+                            <li>Stories, Mentorship & Insights</li>
+                        </ul>
+                        <a href="#employer-resources" class="btn btn-outline btn-sm">Explore Resources</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav">
+        <div class="mobile-nav-items">
+            <a href="../public/index.html" class="mobile-nav-item">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="blog.html" class="mobile-nav-item">
+                <i class="fas fa-newspaper"></i>
+                <span>Blog</span>
+            </a>
+            <a href="categories.html" class="mobile-nav-item active">
+                <i class="fas fa-folder"></i>
+                <span>Categories</span>
+            </a>
+            <a href="user-dashboard.html" class="mobile-nav-item">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
+        </div>
+    </nav>
+
+    <script src="../js/supabase.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Load categories
+            await loadCategories();
+            
+            // Check auth status
+            await checkAuthStatus();
+        });
+
+        async function loadCategories() {
+            const { success, data } = await ZawadiAPI.getCategories();
+            
+            if (success && data) {
+                const categoriesGrid = document.getElementById('categoriesGrid');
+                
+                categoriesGrid.innerHTML = data.map(category => `
+                    <div class="category-card-large" id="category-${category.slug}">
+                        <div class="category-header">
+                            <div class="category-icon-large" style="background: ${category.color || 'var(--primary-color)'}">
+                                <i class="fas ${category.icon || 'fa-folder'}"></i>
+                            </div>
+                            <div class="category-info">
+                                <h2>${category.name}</h2>
+                                <p>${category.description}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="category-content">
+                            <div class="category-stats">
+                                <div class="stat">
+                                    <i class="fas fa-newspaper"></i>
+                                    <span class="stat-value">0</span>
+                                    <span class="stat-label">Articles</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-eye"></i>
+                                    <span class="stat-value">0</span>
+                                    <span class="stat-label">Views</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-clock"></i>
+                                    <span class="stat-value">Avg 5 min</span>
+                                    <span class="stat-label">Read Time</span>
+                                </div>
+                            </div>
+                            
+                            <div class="category-topics">
+                                <h4>Key Topics:</h4>
+                                <div class="topics-list">
+                                    ${getCategoryTopics(category.slug).map(topic => `
+                                        <span class="topic-tag">${topic}</span>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            
+                            <div class="category-actions">
+                                <a href="blog.html?category=${category.id}" class="btn btn-primary">
+                                    <i class="fas fa-book-open"></i> Browse Articles
+                                </a>
+                                <a href="#subscribe" class="btn btn-outline">
+                                    <i class="fas fa-bell"></i> Get Updates
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function getCategoryTopics(slug) {
+            const topics = {
+                'career-clarity-exploration': [
+                    'Career Paths', 'Industry Insights', 'Self-Discovery', 'Career Assessment', 'Goal Setting'
+                ],
+                'skill-development-learning': [
+                    'Technical Skills', 'Soft Skills', 'Learning Roadmaps', 'Online Courses', 'Certifications'
+                ],
+                'job-search-career-advancement': [
+                    'CV Writing', 'Interview Prep', 'Networking', 'Career Switching', 'Salary Negotiation'
+                ],
+                'opportunities-openings': [
+                    'Job Listings', 'Internships', 'Graduate Programs', 'Remote Work', 'Company Spotlights'
+                ],
+                'professionals-leadership': [
+                    'Career Progression', 'Leadership Skills', 'Team Management', 'Work-Life Balance', 'Mentoring'
+                ],
+                'companies-employers': [
+                    'Hiring Best Practices', 'Employer Branding', 'Talent Acquisition', 'Workplace Culture', 'DEI'
+                ],
+                'stories-mentorship-insights': [
+                    'Success Stories', 'Career Journeys', 'Mentorship Advice', 'Lessons Learned', 'Industry Trends'
+                ]
+            };
+            
+            return topics[slug] || ['Career Development', 'Professional Growth', 'Skill Building'];
+        }
+
+        // Add categories page styles
+        const categoriesStyles = document.createElement('style');
+        categoriesStyles.textContent = `
+            .categories-header {
+                background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+                color: white;
+                padding: var(--spacing-2xl) 0;
+                margin-top: 80px;
+                text-align: center;
+            }
+
+            .categories-header h1 {
+                font-size: 3rem;
+                margin-bottom: var(--spacing-md);
+                color: white;
+            }
+
+            .subtitle {
+                font-size: 1.25rem;
+                opacity: 0.9;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            .categories-main {
+                padding: var(--spacing-2xl) 0;
+            }
+
+            .categories-grid {
+                display: flex;
+                flex-direction: column;
+                gap: var(--spacing-xl);
+                margin-bottom: var(--spacing-2xl);
+            }
+
+            .category-card-large {
+                background: white;
+                border-radius: var(--radius-xl);
+                overflow: hidden;
+                box-shadow: var(--shadow-lg);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .category-card-large:hover {
+                transform: translateY(-5px);
+                box-shadow: var(--shadow-xl);
+            }
+
+            .category-header {
+                display: flex;
+                align-items: center;
+                gap: var(--spacing-xl);
+                padding: var(--spacing-2xl);
+                background: linear-gradient(135deg, rgba(0, 102, 255, 0.05), rgba(123, 97, 255, 0.05));
+            }
+
+            .category-icon-large {
+                width: 80px;
+                height: 80px;
+                border-radius: var(--radius-lg);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 2rem;
+                color: white;
+                flex-shrink: 0;
+            }
+
+            .category-info {
+                flex: 1;
+            }
+
+            .category-info h2 {
+                font-size: 1.75rem;
+                margin-bottom: var(--spacing-sm);
+                color: var(--text-primary);
+            }
+
+            .category-info p {
+                color: var(--text-secondary);
+                font-size: 1.125rem;
+                line-height: 1.6;
+                margin: 0;
+            }
+
+            .category-content {
+                padding: var(--spacing-2xl);
+            }
+
+            .category-stats {
+                display: flex;
+                gap: var(--spacing-2xl);
+                margin-bottom: var(--spacing-xl);
+                padding-bottom: var(--spacing-xl);
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .stat {
+                text-align: center;
+            }
+
+            .stat i {
+                font-size: 1.5rem;
+                color: var(--primary-color);
+                margin-bottom: var(--spacing-sm);
+                display: block;
+            }
+
+            .stat-value {
+                display: block;
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: var(--text-primary);
+                margin-bottom: var(--spacing-xs);
+            }
+
+            .stat-label {
+                display: block;
+                font-size: 0.875rem;
+                color: var(--text-tertiary);
+            }
+
+            .category-topics {
+                margin-bottom: var(--spacing-xl);
+            }
+
+            .category-topics h4 {
+                font-size: 1rem;
+                margin-bottom: var(--spacing-md);
+                color: var(--text-secondary);
+            }
+
+            .topics-list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: var(--spacing-sm);
+            }
+
+            .topic-tag {
+                background: var(--surface-color);
+                padding: var(--spacing-xs) var(--spacing-md);
+                border-radius: var(--radius-full);
+                font-size: 0.875rem;
+                color: var(--text-secondary);
+            }
+
+            .category-actions {
+                display: flex;
+                gap: var(--spacing-md);
+            }
+
+            .how-it-works {
+                background: var(--surface-color);
+                border-radius: var(--radius-xl);
+                padding: var(--spacing-2xl);
+                margin-bottom: var(--spacing-2xl);
+            }
+
+            .how-it-works h2 {
+                text-align: center;
+                font-size: 2rem;
+                margin-bottom: var(--spacing-2xl);
+            }
+
+            .steps {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: var(--spacing-xl);
+            }
+
+            .step {
+                text-align: center;
+                padding: var(--spacing-xl);
+                background: white;
+                border-radius: var(--radius-lg);
+                box-shadow: var(--shadow-md);
+            }
+
+            .step-number {
+                width: 48px;
+                height: 48px;
+                background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.25rem;
+                font-weight: 700;
+                margin: 0 auto var(--spacing-lg);
+            }
+
+            .step h3 {
+                font-size: 1.25rem;
+                margin-bottom: var(--spacing-sm);
+            }
+
+            .step p {
+                color: var(--text-secondary);
+                margin: 0;
+            }
+
+            .career-stages {
+                margin-top: var(--spacing-2xl);
+            }
+
+            .career-stages h2 {
+                text-align: center;
+                font-size: 2rem;
+                margin-bottom: var(--spacing-2xl);
+            }
+
+            .stages-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: var(--spacing-xl);
+            }
+
+            .stage-card {
+                background: white;
+                border-radius: var(--radius-lg);
+                padding: var(--spacing-xl);
+                box-shadow: var(--shadow-md);
+                text-align: center;
+                transition: transform 0.3s ease;
+            }
+
+            .stage-card:hover {
+                transform: translateY(-5px);
+                box-shadow: var(--shadow-lg);
+            }
+
+            .stage-icon {
+                width: 64px;
+                height: 64px;
+                background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+                color: white;
+                border-radius: var(--radius-lg);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+                margin: 0 auto var(--spacing-lg);
+            }
+
+            .stage-card h3 {
+                font-size: 1.25rem;
+                margin-bottom: var(--spacing-lg);
+            }
+
+            .stage-categories {
+                list-style: none;
+                padding: 0;
+                margin-bottom: var(--spacing-lg);
+                text-align: left;
+            }
+
+            .stage-categories li {
+                padding: var(--spacing-xs) 0;
+                color: var(--text-secondary);
+                position: relative;
+                padding-left: var(--spacing-lg);
+            }
+
+            .stage-categories li:before {
+                content: '✓';
+                color: var(--success-color);
+                position: absolute;
+                left: 0;
+            }
+
+            @media (max-width: 768px) {
+                .categories-header h1 {
+                    font-size: 2rem;
+                }
+
+                .category-header {
+                    flex-direction: column;
+                    text-align: center;
+                    gap: var(--spacing-lg);
+                }
+
+                .category-stats {
+                    flex-direction: column;
+                    gap: var(--spacing-lg);
+                }
+
+                .category-actions {
+                    flex-direction: column;
+                }
+
+                .steps,
+                .stages-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        `;
+        document.head.appendChild(categoriesStyles);
+    </script>
+</body>
+</html>
