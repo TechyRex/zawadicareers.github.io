@@ -126,11 +126,30 @@
         </div>
     </div>
 
+        <!-- Load Supabase FIRST -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Then load your supabase.js -->
     <script src="../js/supabase.js"></script>
+    
     <script>
+        // Debug: Check what's loaded
+        console.log('🔍 Debug Info:');
+        console.log('window.supabase:', typeof window.supabase);
+        console.log('window.ZawadiAPI:', typeof window.ZawadiAPI);
+        console.log('ZawadiAPI:', window.ZawadiAPI);
+
         // Initialize form
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('Signup page loaded');
+            console.log('✅ Signup page loaded');
+            
+            // Check if API is available
+            if (!window.ZawadiAPI) {
+                console.error('❌ ZawadiAPI not found! Check supabase.js loading.');
+                showMessage('System initialization failed. Please refresh the page.', 'error');
+                return;
+            }
+            
+            console.log('✅ ZawadiAPI found, functions:', Object.keys(window.ZawadiAPI));
             
             // Password strength checker
             document.getElementById('password').addEventListener('input', function() {
@@ -158,19 +177,19 @@
                     clearError(input.id);
                 });
             });
-
-            // Social signup buttons (placeholder)
-            document.getElementById('googleSignup').addEventListener('click', () => {
-                showMessage('Google signup will be available soon!', 'info');
-            });
-
-            document.getElementById('linkedinSignup').addEventListener('click', () => {
-                showMessage('LinkedIn signup will be available soon!', 'info');
-            });
         });
 
         async function handleSignup(e) {
             e.preventDefault();
+            
+            console.log('🔄 Form submission started...');
+            
+            // Check if API is available
+            if (!window.ZawadiAPI || !window.ZawadiAPI.signUp) {
+                console.error('❌ ZawadiAPI.signUp not available!');
+                showMessage('System error. Please refresh the page.', 'error');
+                return;
+            }
             
             // Reset all errors
             clearAllErrors();
@@ -182,6 +201,8 @@
             const confirmPassword = document.getElementById('confirmPassword').value;
             const agreeTerms = document.getElementById('terms').checked;
             const subscribeNewsletter = document.getElementById('newsletter').checked;
+            
+            console.log('📝 Form data:', { email, fullName, passwordLength: password.length });
             
             // Validation
             let isValid = true;
@@ -223,20 +244,23 @@
             submitBtn.disabled = true;
 
             try {
-                console.log('Attempting sign up...');
+                console.log('🚀 Calling ZawadiAPI.signUp...');
                 
                 // Call signUp function
-                const result = await ZawadiAPI.signUp(email, password, fullName);
+                const result = await window.ZawadiAPI.signUp(email, password, fullName);
+                
+                console.log('📨 Sign up result:', result);
                 
                 if (result.success) {
-                    console.log('Sign up successful:', result);
+                    console.log('✅ Sign up successful!');
                     
                     // Subscribe to newsletter if checked
                     if (subscribeNewsletter) {
                         try {
-                            await ZawadiAPI.subscribeNewsletter(email, fullName, 'signup');
+                            await window.ZawadiAPI.subscribeNewsletter(email, fullName, 'signup');
+                            console.log('✅ Newsletter subscribed');
                         } catch (newsletterError) {
-                            console.warn('Newsletter subscription failed:', newsletterError);
+                            console.warn('⚠️ Newsletter subscription failed:', newsletterError);
                         }
                     }
                     
@@ -252,14 +276,14 @@
                     }, 3000);
                     
                 } else {
-                    console.error('Sign up failed:', result.error);
+                    console.error('❌ Sign up failed:', result.error);
                     showMessage(result.error || 'Failed to create account. Please try again.', 'error');
                     submitBtn.innerHTML = originalText;
                     submitBtn.disabled = false;
                 }
             } catch (error) {
-                console.error('Unexpected error:', error);
-                showMessage('An unexpected error occurred. Please try again.', 'error');
+                console.error('💥 Unexpected error:', error);
+                showMessage('An unexpected error occurred: ' + error.message, 'error');
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
             }
@@ -326,6 +350,9 @@
             
             container.appendChild(messageEl);
             
+            // Scroll to message
+            messageEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
             // Auto remove after 5 seconds for info messages
             if (type === 'info') {
                 setTimeout(() => {
@@ -338,42 +365,43 @@
         const errorStyles = document.createElement('style');
         errorStyles.textContent = `
             .error {
-                border-color: var(--error-color) !important;
+                border-color: #EF4444 !important;
+                border-width: 2px !important;
             }
             
             .error-message {
-                color: var(--error-color);
+                color: #EF4444;
                 font-size: 0.875rem;
-                margin-top: var(--spacing-xs);
+                margin-top: 5px;
                 display: none;
             }
             
             .alert {
-                padding: var(--spacing-md);
-                border-radius: var(--radius-md);
-                margin-bottom: var(--spacing-lg);
+                padding: 12px 16px;
+                border-radius: 8px;
+                margin-bottom: 20px;
                 display: flex;
                 align-items: center;
-                gap: var(--spacing-md);
+                gap: 12px;
                 animation: slideDown 0.3s ease;
             }
             
             .alert-success {
                 background: rgba(16, 185, 129, 0.1);
                 border: 1px solid rgba(16, 185, 129, 0.2);
-                color: var(--success-color);
+                color: #10B981;
             }
             
             .alert-error {
                 background: rgba(239, 68, 68, 0.1);
                 border: 1px solid rgba(239, 68, 68, 0.2);
-                color: var(--error-color);
+                color: #EF4444;
             }
             
             .alert-info {
                 background: rgba(59, 130, 246, 0.1);
                 border: 1px solid rgba(59, 130, 246, 0.2);
-                color: var(--info-color);
+                color: #3B82F6;
             }
             
             @keyframes slideDown {
@@ -386,8 +414,28 @@
                     transform: translateY(0);
                 }
             }
+            
+            .password-strength {
+                margin-top: 8px;
+            }
+            
+            .strength-meter {
+                height: 4px;
+                background: #E2E8F0;
+                border-radius: 2px;
+                margin-bottom: 5px;
+                overflow: hidden;
+            }
+            
+            .strength-fill {
+                height: 100%;
+                width: 0%;
+                transition: width 0.3s ease, background-color 0.3s ease;
+                border-radius: 2px;
+            }
         `;
         document.head.appendChild(errorStyles);
     </script>
 </body>
 </html>
+
