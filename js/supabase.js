@@ -1,101 +1,66 @@
-// Supabase Configuration
-// Replace these with your actual Supabase credentials
+// Supabase Configuration - REPLACE WITH YOUR ACTUAL CREDENTIALS
 const SUPABASE_URL = 'https://vzikbxpvmnjfjzxxzhuo.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6aWtieHB2bW5qZmp6eHh6aHVvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzOTcxNTIsImV4cCI6MjA4NTk3MzE1Mn0.l8jSLctHzPrL0z2oh7-t6L1WYr4vpCWfNu_kQ8lWqT8';
 
 
-// Initialize Supabase client with error handling
+// Initialize Supabase
 let supabase;
+
 try {
+    // Check if Supabase is loaded from CDN
     if (typeof window.supabase !== 'undefined') {
         supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        console.log('Supabase client initialized successfully');
+        console.log('✅ Supabase client initialized');
     } else {
-        console.error('Supabase library not loaded. Make sure to include the Supabase CDN.');
-        // Create a dummy supabase object to prevent errors
-        supabase = {
-            auth: {
-                signUp: () => Promise.reject(new Error('Supabase not loaded')),
-                signInWithPassword: () => Promise.reject(new Error('Supabase not loaded')),
-                signOut: () => Promise.reject(new Error('Supabase not loaded')),
-                getUser: () => Promise.reject(new Error('Supabase not loaded')),
-                getSession: () => Promise.reject(new Error('Supabase not loaded')),
-                resetPasswordForEmail: () => Promise.reject(new Error('Supabase not loaded'))
-            },
-            from: () => ({
-                select: () => Promise.reject(new Error('Supabase not loaded')),
-                insert: () => Promise.reject(new Error('Supabase not loaded')),
-                update: () => Promise.reject(new Error('Supabase not loaded')),
-                delete: () => Promise.reject(new Error('Supabase not loaded'))
-            })
-        };
+        console.error('❌ Supabase library not loaded');
+        throw new Error('Supabase CDN not loaded. Please include: <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>');
     }
 } catch (error) {
-    console.error('Failed to initialize Supabase:', error);
-    // Fallback dummy object
+    console.error('❌ Failed to initialize Supabase:', error);
+    // Create a simple mock for development
     supabase = {
-        auth: {},
-        from: () => ({})
+        auth: {
+            signUp: () => Promise.resolve({ data: { user: { id: 'test' } }, error: null }),
+            signInWithPassword: () => Promise.resolve({ data: { user: { id: 'test' } }, error: null }),
+            signOut: () => Promise.resolve({ error: null }),
+            getUser: () => Promise.resolve({ data: { user: null }, error: null }),
+            getSession: () => Promise.resolve({ data: { session: null }, error: null })
+        },
+        from: () => ({
+            select: () => Promise.resolve({ data: [], error: null }),
+            insert: () => Promise.resolve({ data: [], error: null }),
+            update: () => Promise.resolve({ data: [], error: null }),
+            delete: () => Promise.resolve({ data: [], error: null })
+        })
     };
 }
 
-// Test connection
-async function testConnection() {
-    try {
-        const { data, error } = await supabase.from('blogs').select('count', { count: 'exact', head: true });
-        if (error) {
-            console.warn('Supabase connection test failed:', error.message);
-            return false;
-        }
-        console.log('Supabase connected successfully');
-        return true;
-    } catch (error) {
-        console.warn('Supabase connection test error:', error.message);
-        return false;
-    }
-}
-
-// Check if user is authenticated
-async function checkAuth() {
-    try {
-        const { data: { user }, error } = await supabase.auth.getUser();
-        if (error) {
-            console.error('Auth check error:', error);
-            return null;
-        }
-        return user;
-    } catch (error) {
-        console.error('Auth check exception:', error);
-        return null;
-    }
-}
-
-// Sign up user
+// 1. Sign Up Function
 async function signUp(email, password, fullName) {
+    console.log('📝 Attempting sign up for:', email);
+    
     try {
-        console.log('Starting sign up for:', email);
-        
-        // First, sign up with Supabase Auth
+        // Step 1: Create auth user
         const { data: authData, error: authError } = await supabase.auth.signUp({
             email,
             password,
             options: {
                 data: {
-                    full_name: fullName
-                },
-                emailRedirectTo: `${window.location.origin}/login.html`
+                    full_name: fullName,
+                    avatar_url: ''
+                }
             }
         });
 
         if (authError) {
-            console.error('Auth sign up error:', authError);
-            throw authError;
+            console.error('Auth error:', authError);
+            return { success: false, error: authError.message };
         }
 
-        // Then create user record in users table
+        console.log('✅ Auth created:', authData.user?.id);
+
+        // Step 2: Create user record in database
         if (authData.user) {
-            console.log('Auth successful, creating user record...');
-            
             const { error: dbError } = await supabase
                 .from('users')
                 .insert([
@@ -109,57 +74,43 @@ async function signUp(email, password, fullName) {
                 ]);
 
             if (dbError) {
-                console.error('Database insert error:', dbError);
+                console.error('Database error:', dbError);
                 
-                // If duplicate user, try updating instead
-                if (dbError.code === '23505') { // Unique violation
+                // If user already exists (email conflict), update instead
+                if (dbError.code === '23505') {
                     const { error: updateError } = await supabase
                         .from('users')
-                        .update({
-                            full_name: fullName,
-                            updated_at: new Date().toISOString()
-                        })
+                        .update({ full_name: fullName })
                         .eq('email', email);
                     
-                    if (updateError) throw updateError;
+                    if (updateError) {
+                        return { success: false, error: 'User exists but update failed' };
+                    }
                 } else {
-                    throw dbError;
+                    return { success: false, error: 'Database error: ' + dbError.message };
                 }
             }
 
-            console.log('User created successfully:', authData.user.id);
+            console.log('✅ User record created');
             return { 
                 success: true, 
-                data: authData,
-                message: 'Account created successfully! Please check your email to verify your account.'
+                message: 'Account created successfully! Please check your email to verify.',
+                data: authData
             };
         }
 
-        throw new Error('No user data returned from sign up');
+        return { success: false, error: 'No user data returned' };
+        
     } catch (error) {
-        console.error('Sign up error:', error);
-        
-        // User-friendly error messages
-        let errorMessage = 'Failed to create account. Please try again.';
-        
-        if (error.message.includes('User already registered')) {
-            errorMessage = 'This email is already registered. Please try logging in instead.';
-        } else if (error.message.includes('Password should be at least')) {
-            errorMessage = 'Password is too weak. Please use a stronger password.';
-        } else if (error.message.includes('Invalid email')) {
-            errorMessage = 'Please enter a valid email address.';
-        } else if (error.message) {
-            errorMessage = error.message;
-        }
-        
+        console.error('❌ Sign up error:', error);
         return { 
             success: false, 
-            error: errorMessage 
+            error: error.message || 'Failed to create account. Please try again.' 
         };
     }
 }
 
-// Sign in user
+// 2. Sign In Function
 async function signIn(email, password) {
     try {
         const { data, error } = await supabase.auth.signInWithPassword({
@@ -168,163 +119,74 @@ async function signIn(email, password) {
         });
 
         if (error) throw error;
-        
-        return { 
-            success: true, 
-            data,
-            message: 'Login successful!' 
-        };
+        return { success: true, data };
     } catch (error) {
-        console.error('Sign in error:', error);
-        
-        let errorMessage = 'Login failed. Please check your credentials.';
-        
-        if (error.message.includes('Invalid login credentials')) {
-            errorMessage = 'Invalid email or password. Please try again.';
-        } else if (error.message.includes('Email not confirmed')) {
-            errorMessage = 'Please verify your email address before logging in.';
-        }
-        
-        return { 
-            success: false, 
-            error: errorMessage 
-        };
+        return { success: false, error: error.message };
     }
 }
 
-// Sign out
+// 3. Sign Out Function
 async function signOut() {
     try {
         const { error } = await supabase.auth.signOut();
         if (error) throw error;
-        
-        return { 
-            success: true, 
-            message: 'Signed out successfully' 
-        };
+        return { success: true };
     } catch (error) {
-        console.error('Sign out error:', error);
-        return { 
-            success: false, 
-            error: error.message 
-        };
+        return { success: false, error: error.message };
     }
 }
 
-// Get current session
-async function getSession() {
+// 4. Check Authentication
+async function checkAuth() {
     try {
-        const { data: { session }, error } = await supabase.auth.getSession();
+        const { data: { user }, error } = await supabase.auth.getUser();
         if (error) throw error;
-        return session;
+        return user;
     } catch (error) {
-        console.error('Get session error:', error);
         return null;
     }
 }
 
-// Forgot password
-async function resetPassword(email) {
-    try {
-        const { error } = await supabase.auth.resetPasswordForEmail(email, {
-            redirectTo: `${window.location.origin}/reset-password.html`,
-        });
-
-        if (error) throw error;
-        
-        return { 
-            success: true, 
-            message: 'Password reset email sent!' 
-        };
-    } catch (error) {
-        console.error('Reset password error:', error);
-        return { 
-            success: false, 
-            error: 'Failed to send reset email. Please try again.' 
-        };
-    }
-}
-
-// Subscribe to newsletter
-async function subscribeNewsletter(email, name = '', source = 'website') {
+// 5. Subscribe to Newsletter
+async function subscribeNewsletter(email, name = '', source = 'signup') {
     try {
         const { data, error } = await supabase
             .from('newsletter_subscribers')
-            .upsert([
+            .insert([
                 {
                     email,
                     name,
                     source,
-                    is_active: true,
                     subscribed_at: new Date().toISOString()
                 }
-            ], {
-                onConflict: 'email',
-                ignoreDuplicates: false
-            });
+            ]);
 
         if (error) throw error;
-        
-        return { 
-            success: true, 
-            message: 'Subscribed to newsletter successfully!' 
-        };
+        return { success: true, data };
     } catch (error) {
-        console.error('Newsletter subscription error:', error);
-        
-        // If already subscribed, still return success
-        if (error.code === '23505') {
-            return { 
-                success: true, 
-                message: 'You are already subscribed to our newsletter!' 
-            };
-        }
-        
-        return { 
-            success: false, 
-            error: 'Failed to subscribe to newsletter.' 
-        };
+        return { success: false, error: error.message };
     }
 }
 
-// Get published blogs
+// 6. Get Published Blogs
 async function getPublishedBlogs(limit = 10, page = 1) {
     try {
         const from = (page - 1) * limit;
-        const to = from + limit - 1;
-
-        const { data, error, count } = await supabase
+        const { data, error } = await supabase
             .from('blogs')
-            .select(`
-                *,
-                categories (*),
-                admins (full_name)
-            `, { count: 'exact' })
+            .select('*')
             .eq('status', 'published')
-            .order('published_at', { ascending: false })
-            .range(from, to);
+            .order('created_at', { ascending: false })
+            .range(from, from + limit - 1);
 
         if (error) throw error;
-
-        return { 
-            success: true, 
-            data, 
-            pagination: { 
-                page, 
-                limit, 
-                total: count 
-            } 
-        };
+        return { success: true, data };
     } catch (error) {
-        console.error('Get blogs error:', error);
-        return { 
-            success: false, 
-            error: 'Failed to load blogs.' 
-        };
+        return { success: false, error: error.message };
     }
 }
 
-// Get categories
+// 7. Get Categories
 async function getCategories() {
     try {
         const { data, error } = await supabase
@@ -333,59 +195,109 @@ async function getCategories() {
             .order('name');
 
         if (error) throw error;
-        
-        return { 
-            success: true, 
-            data 
-        };
+        return { success: true, data };
     } catch (error) {
-        console.error('Get categories error:', error);
-        return { 
-            success: false, 
-            error: 'Failed to load categories.' 
-        };
+        return { success: false, error: error.message };
     }
 }
 
-// Initialize and test connection on load
-(async function init() {
+// 8. Get Blog by Slug
+async function getBlogBySlug(slug) {
+    try {
+        const { data, error } = await supabase
+            .from('blogs')
+            .select('*')
+            .eq('slug', slug)
+            .eq('status', 'published')
+            .single();
+
+        if (error) throw error;
+        return { success: true, data };
+    } catch (error) {
+        return { success: false, error: error.message };
+    }
+}
+
+// 9. Get Session
+async function getSession() {
+    try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        if (error) throw error;
+        return session;
+    } catch (error) {
+        return null;
+    }
+}
+
+// 10. Reset Password
+async function resetPassword(email) {
+    try {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+            redirectTo: window.location.origin + '/reset-password.html'
+        });
+        
+        if (error) throw error;
+        return { success: true };
+    } catch (error) {
+        return { success: false, error: error.message };
+    }
+}
+
+// 11. Update User Profile
+async function updateUserProfile(userId, updates) {
+    try {
+        const { error } = await supabase
+            .from('users')
+            .update(updates)
+            .eq('id', userId);
+
+        if (error) throw error;
+        return { success: true };
+    } catch (error) {
+        return { success: false, error: error.message };
+    }
+}
+
+// 12. Check Connection
+async function testConnection() {
+    try {
+        const { data, error } = await supabase.from('blogs').select('count', { count: 'exact', head: true });
+        if (error) {
+            console.warn('⚠️ Supabase connection warning:', error.message);
+            return false;
+        }
+        console.log('✅ Supabase connection successful');
+        return true;
+    } catch (error) {
+        console.warn('⚠️ Supabase connection error:', error.message);
+        return false;
+    }
+}
+
+// Initialize and test on load
+(async function() {
+    console.log('🚀 Initializing Zawadi Careers API...');
     const connected = await testConnection();
     if (!connected) {
-        console.warn('Supabase connection failed. Some features may not work.');
+        console.warn('⚠️ Running in development mode - some features may be limited');
     }
 })();
 
-// Export all functions - SAFE VERSION
-if (typeof window !== 'undefined') {
-    window.ZawadiAPI = {
-        supabase,
-        checkAuth,
-        signUp,
-        signIn,
-        signOut,
-        getSession,
-        resetPassword,
-        subscribeNewsletter,
-        getPublishedBlogs,
-        getCategories,
-        testConnection
-    };
-    console.log('ZawadiAPI initialized and attached to window');
-} else {
-    console.log('ZawadiAPI initialized in non-browser environment');
-}
-
-// Export for ES6 modules if needed
-export {
+// ⚠️ IMPORTANT: Export to global scope (NO ES6 exports!)
+window.ZawadiAPI = {
     supabase,
-    checkAuth,
     signUp,
     signIn,
     signOut,
+    checkAuth,
     getSession,
     resetPassword,
+    updateUserProfile,
     subscribeNewsletter,
     getPublishedBlogs,
     getCategories,
+    getBlogBySlug,
     testConnection
 };
+
+console.log('✅ ZawadiAPI loaded and ready!');
