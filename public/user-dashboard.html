@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard - Zawadi Careers</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="../assets/zawadi-logo.png" type="image/png">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">
+                <img src="../assets/zawadi-logo.png" alt="Zawadi Careers Logo">
+                <span class="logo-text">Zawadi Careers</span>
+            </div>
+            
+            <div class="nav-links">
+                <a href="../public/index.html">Home</a>
+                <a href="../public/blog.html">Blog</a>
+                <a href="../public/categories.html">Categories</a>
+                <a href="#opportunities">Opportunities</a>
+                <a href="#resources">Resources</a>
+            </div>
+            
+            <div class="nav-actions">
+                <div class="user-menu" id="userMenu">
+                    <!-- Filled by JavaScript -->
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Dashboard -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+            <div class="user-profile" id="userProfile">
+                <!-- Filled by JavaScript -->
+            </div>
+
+            <nav class="dashboard-nav">
+                <a href="#overview" class="nav-item active">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#reading-progress" class="nav-item">
+                    <i class="fas fa-book-open"></i>
+                    <span>Reading Progress</span>
+                </a>
+                <a href="#saved-articles" class="nav-item">
+                    <i class="fas fa-bookmark"></i>
+                    <span>Saved Articles</span>
+                </a>
+                <a href="#career-path" class="nav-item">
+                    <i class="fas fa-compass"></i>
+                    <span>Career Path</span>
+                </a>
+                <a href="#skills" class="nav-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Skills Tracker</span>
+                </a>
+                <a href="#opportunities" class="nav-item">
+                    <i class="fas fa-bullseye"></i>
+                    <span>Opportunities</span>
+                </a>
+                <a href="#settings" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <button onclick="handleSignOut()" class="nav-item">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sign Out</span>
+                </button>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Welcome Section -->
+            <section class="dashboard-section" id="overview">
+                <div class="section-header">
+                    <h1>Welcome back, <span id="userGreeting">User</span>! 👋</h1>
+                    <p class="section-subtitle">Here's your career development progress</p>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-book-reader"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="articlesRead">0</h3>
+                            <p>Articles Read</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalTime">0</h3>
+                            <p>Minutes Learning</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="skillsLearned">0</h3>
+                            <p>Skills Learning</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="goalsCompleted">0</h3>
+                            <p>Goals Achieved</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h2>Continue Your Journey</h2>
+                    <div class="actions-grid">
+                        <a href="../public/blog.html" class="action-card">
+                            <i class="fas fa-newspaper"></i>
+                            <h3>Read Articles</h3>
+                            <p>Continue reading career insights</p>
+                        </a>
+                        <a href="#skills" class="action-card">
+                            <i class="fas fa-chart-line"></i>
+                            <h3>Track Skills</h3>
+                            <p>Monitor your skill development</p>
+                        </a>
+                        <a href="#career-path" class="action-card">
+                            <i class="fas fa-road"></i>
+                            <h3>Career Path</h3>
+                            <p>Plan your next career move</p>
+                        </a>
+                        <a href="#opportunities" class="action-card">
+                            <i class="fas fa-briefcase"></i>
+                            <h3>Find Jobs</h3>
+                            <p>Browse career opportunities</p>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="recent-activity">
+                    <div class="section-header">
+                        <h2>Recent Activity</h2>
+                        <a href="#reading-progress" class="btn btn-outline btn-sm">View All</a>
+                    </div>
+                    <div class="activity-list" id="activityList">
+                        <!-- Filled by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reading Progress -->
+            <section class="dashboard-section" id="reading-progress" style="display: none;">
+                <div class="section-header">
+                    <h1>Reading Progress</h1>
+                    <p>Track articles you've read and continue where you left off</p>
+                </div>
+
+                <div class="progress-filters">
+                    <button class="filter-btn active">All</button>
+                    <button class="filter-btn">In Progress</button>
+                    <button class="filter-btn">Completed</button>
+                    <button class="filter-btn">Saved</button>
+                </div>
+
+                <div class="reading-list" id="readingList">
+                    <!-- Filled by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Saved Articles -->
+            <section class="dashboard-section" id="saved-articles" style="display: none;">
+                <div class="section-header">
+                    <h1>Saved Articles</h1>
+                    <p>Articles you've bookmarked for later</p>
+                </div>
+
+                <div class="saved-articles-grid" id="savedArticles">
+                    <!-- Filled by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Career Path -->
+            <section class="dashboard-section" id="career-path" style="display: none;">
+                <div class="section-header">
+                    <h1>Career Path</h1>
+                    <p>Plan and track your career development journey</p>
+                </div>
+
+                <div class="career-path-container">
+                    <div class="path-visualization">
+                        <!-- Career path visualization will go here -->
+                        <div class="path-empty-state">
+                            <i class="fas fa-compass"></i>
+                            <h3>Set Your Career Goals</h3>
+                            <p>Define your career path to get personalized recommendations</p>
+                            <button class="btn btn-primary">Set Career Goals</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav">
+        <div class="mobile-nav-items">
+            <a href="../public/index.html" class="mobile-nav-item">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="../public/blog.html" class="mobile-nav-item">
+                <i class="fas fa-newspaper"></i>
+                <span>Blog</span>
+            </a>
+            <a href="../public/categories.html" class="mobile-nav-item">
+                <i class="fas fa-folder"></i>
+                <span>Categories</span>
+            </a>
+            <a href="user-dashboard.html" class="mobile-nav-item active">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
+        </div>
+    </nav>
+
+    <script src="../js/supabase.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        let user = null;
+        let readingProgress = [];
+        let userStats = {
+            articlesRead: 0,
+            totalTime: 0,
+            skillsLearned: 0,
+            goalsCompleted: 0
+        };
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Check authentication
+            user = await ZawadiAPI.checkAuth();
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Load user data
+            await loadUserData();
+            await loadReadingProgress();
+            await loadUserStats();
+            
+            // Setup navigation
+            setupNavigation();
+            setupMobileMenu();
+        });
+
+        async function loadUserData() {
+            // Load user profile
+            const { data: userData } = await ZawadiAPI.supabase
+                .from('users')
+                .select('*')
+                .eq('id', user.id)
+                .single();
+
+            if (userData) {
+                // Update user profile
+                const userProfile = document.getElementById('userProfile');
+                const userGreeting = document.getElementById('userGreeting');
+                const userMenu = document.getElementById('userMenu');
+                
+                const initials = userData.full_name 
+                    ? userData.full_name.split(' ').map(n => n[0]).join('').toUpperCase()
+                    : user.email.substring(0, 2).toUpperCase();
+
+                userProfile.innerHTML = `
+                    <div class="profile-avatar">${initials}</div>
+                    <div class="profile-info">
+                        <h3>${userData.full_name || 'User'}</h3>
+                        <p>${user.email}</p>
+                    </div>
+                `;
+
+                userGreeting.textContent = userData.full_name?.split(' ')[0] || 'User';
+                
+                userMenu.innerHTML = `
+                    <div class="user-dropdown">
+                        <div class="user-dropdown-toggle">
+                            <div class="user-avatar-small">${initials}</div>
+                            <span>${userData.full_name?.split(' ')[0] || 'User'}</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="user-dropdown-menu">
+                            <a href="user-dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                            <a href="#profile"><i class="fas fa-user"></i> Profile</a>
+                            <a href="#settings"><i class="fas fa-cog"></i> Settings</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" onclick="handleSignOut()"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        async function loadReadingProgress() {
+            const { success, data } = await ZawadiAPI.getUserReadingProgress();
+            
+            if (success && data) {
+                readingProgress = data;
+                updateActivityList();
+                updateReadingList();
+            }
+        }
+
+        async function loadUserStats() {
+            // Calculate stats from reading progress
+            const articlesRead = readingProgress.filter(p => p.is_completed).length;
+            const totalTime = readingProgress.reduce((sum, p) => sum + (p.time_spent || 0), 0);
+            
+            // Update stats cards
+            document.getElementById('articlesRead').textContent = articlesRead;
+            document.getElementById('totalTime').textContent = Math.floor(totalTime / 60); // Convert to minutes
+            
+            userStats = {
+                articlesRead,
+                totalTime: Math.floor(totalTime / 60),
+                skillsLearned: 0, // This would come from skills tracking
+                goalsCompleted: 0 // This would come from goals tracking
+            };
+        }
+
+        function updateActivityList() {
+            const activityList = document.getElementById('activityList');
+            
+            if (!readingProgress || readingProgress.length === 0) {
+                activityList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-book-open"></i>
+                        <h3>No reading activity yet</h3>
+                        <p>Start reading articles to track your progress</p>
+                        <a href="../public/blog.html" class="btn btn-primary">Browse Articles</a>
+                    </div>
+                `;
+                return;
+            }
+
+            // Sort by last read date
+            const sortedProgress = [...readingProgress].sort((a, b) => 
+                new Date(b.last_read_at) - new Date(a.last_read_at)
+            ).slice(0, 5); // Show only 5 most recent
+
+            activityList.innerHTML = sortedProgress.map(progress => `
+                <div class="activity-item">
+                    <div class="activity-icon ${progress.is_completed ? 'completed' : 'in-progress'}">
+                        <i class="fas fa-${progress.is_completed ? 'check-circle' : 'book-open'}"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">
+                            <a href="blog-detail.html?slug=${progress.blogs.slug}">
+                                ${progress.blogs.title}
+                            </a>
+                        </div>
+                        <div class="activity-details">
+                            <span class="activity-category">${progress.blogs.categories?.name || 'General'}</span>
+                            <span class="activity-time">${formatTimeAgo(progress.last_read_at)}</span>
+                        </div>
+                        ${!progress.is_completed ? `
+                            <div class="progress-indicator">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${(progress.section_index / progress.total_sections) * 100}%"></div>
+                                </div>
+                                <span>${Math.round((progress.section_index / progress.total_sections) * 100)}% complete</span>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateReadingList() {
+            const readingList = document.getElementById('readingList');
+            
+            if (!readingProgress || readingProgress.length === 0) {
+                readingList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-book-open"></i>
+                        <h3>No reading progress yet</h3>
+                        <p>Start reading articles to see them here</p>
+                        <a href="../public/blog.html" class="btn btn-primary">Start Reading</a>
+                    </div>
+                `;
+                return;
+            }
+
+            readingList.innerHTML = readingProgress.map(progress => `
+                <div class="reading-item ${progress.is_completed ? 'completed' : ''}">
+                    <div class="reading-image">
+                        <img src="${progress.blogs.cover_image || '../assets/images/default-blog.jpg'}" 
+                             alt="${progress.blogs.title}">
+                    </div>
+                    <div class="reading-content">
+                        <div class="reading-header">
+                            <span class="reading-category">${progress.blogs.categories?.name || 'General'}</span>
+                            <span class="reading-date">${formatDate(progress.last_read_at)}</span>
+                        </div>
+                        <h3 class="reading-title">
+                            <a href="blog-detail.html?slug=${progress.blogs.slug}">
+                                ${progress.blogs.title}
+                            </a>
+                        </h3>
+                        <p class="reading-excerpt">${truncateText(progress.blogs.excerpt || '', 100)}</p>
+                        <div class="reading-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${(progress.section_index / progress.total_sections) * 100}%"></div>
+                            </div>
+                            <div class="progress-info">
+                                <span>${progress.is_completed ? 'Completed' : `${progress.section_index + 1} of ${progress.total_sections} sections`}</span>
+                                <span>${Math.floor((progress.time_spent || 0) / 60)} min</span>
+                            </div>
+                        </div>
+                        <div class="reading-actions">
+                            <a href="blog-detail.html?slug=${progress.blogs.slug}" class="btn btn-outline btn-sm">
+                                ${progress.is_completed ? 'Re-read' : 'Continue Reading'}
+                            </a>
+                            <button class="btn-icon" onclick="removeReadingProgress('${progress.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function setupNavigation() {
+            const navItems = document.querySelectorAll('.nav-item');
+            const sections = document.querySelectorAll('.dashboard-section');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Remove active class from all items
+                    navItems.forEach(i => i.classList.remove('active'));
+                    // Hide all sections
+                    sections.forEach(s => s.style.display = 'none');
+                    
+                    // Add active class to clicked item
+                    item.classList.add('active');
+                    
+                    // Show corresponding section
+                    const targetId = item.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        targetSection.style.display = 'block';
+                    }
+                });
+            });
+        }
+
+        function setupMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (mobileMenuBtn && navLinks) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    navLinks.classList.toggle('active');
+                    mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+                        ? '<i class="fas fa-times"></i>' 
+                        : '<i class="fas fa-bars"></i>';
+                });
+            }
+        }
+
+        async function removeReadingProgress(progressId) {
+            if (confirm('Remove this reading progress?')) {
+                const { error } = await ZawadiAPI.supabase
+                    .from('reading_progress')
+                    .delete()
+                    .eq('id', progressId);
+                
+                if (!error) {
+                    // Reload reading progress
+                    await loadReadingProgress();
+                    await loadUserStats();
+                }
+            }
+        }
+
+        async function handleSignOut() {
+            await ZawadiAPI.signOut();
+            window.location.href = '../public/index.html';
+        }
+
+        // Utility functions
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        function formatTimeAgo(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMins / 60);
+            const diffDays = Math.floor(diffHours / 24);
+
+            if (diffMins < 1) return 'Just now';
+            if (diffMins < 60) return `${diffMins} min ago`;
+            if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+            if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+            
+            return date.toLocaleDateString();
+        }
+
+        function truncateText(text, maxLength) {
+            if (!text) return '';
+            if (text.length <= maxLength) return text;
+            return text.substr(0, maxLength) + '...';
+        }
+
+        // Add dashboard styles
+        const dashboardStyles = document.createElement('style');
+        dashboardStyles.textContent = `
+            .dashboard-container {
+                display: flex;
+                min-height: calc(100vh - 80px);
+                margin-top: 80px;
+            }
+
+            .dashboard-sidebar {
+                width: 280px;
+                background: white;
+                border-right: 1px solid var(--border-color);
+                padding: var(--spacing-xl);
+                position: fixed;
+                top: 80px;
+                bottom: 0;
+                overflow-y: auto;
+            }
+
+            .user-profile {
+                text-align: center;
+                margin-bottom: var(--spacing-2xl);
+                padding-bottom: var(--spacing-xl);
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .profile-avatar {
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin: 0 auto var(--spacing-md);
+            }
+
+            .profile-info h3 {
+                font-size: 1.25rem;
+                margin-bottom: var(--spacing-xs);
+            }
+
+            .profile-info p {
+                color: var(--text-tertiary);
+                font-size: 0.875rem;
+            }
+
+            .dashboard-nav {
+                display: flex;
+                flex-direction: column;
+                gap: var(--spacing-xs);
+            }
+
+            .nav-item {
+                display: flex;
+                align-items: center;
+                gap: var(--spacing-md);
+                padding: var(--spacing-md);
+                border-radius: var(--radius-md);
+                color: var(--text-secondary);
+                font-weight: 500;
+                transition: all 0.3s ease;
+                text-decoration: none;
+                border: none;
+                background: none;
+                cursor: pointer;
+                text-align: left;
+                width: 100%;
+            }
+
+            .nav-item:hover,
+            .nav-item.active {
+                background: rgba(0, 102, 255, 0.05);
+                color: var(--primary-color);
+            }
+
+            .nav-item i {
+                width: 20px;
+                text-align: center;
+            }
+
+            .dashboard-main {
+                flex: 1;
+                margin-left: 280px;
+                padding: var(--spacing-2xl);
+                background: var(--surface-color);
+            }
+
+            .dashboard-section {
+                animation: fadeIn 0.3s ease;
+            }
+
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+
+            .section-header {
+                margin-bottom: var(--spacing-2xl);
+            }
+
+            .section-header h1 {
+                font-size: 2rem;
+                margin-bottom: var(--spacing-sm);
+            }
+
+            .section-subtitle {
+                color: var(--text-secondary);
+                font-size: 1.125rem;
+            }
+
+            .stats-cards {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                gap: var(--spacing-lg);
+                margin-bottom: var(--spacing-2xl);
+            }
+
+            .stat-card {
+                background: white;
+                padding: var(--spacing-xl);
+                border-radius: var(--radius-lg);
+                box-shadow: var(--shadow-md);
+                display: flex;
+                align-items: center;
+                gap: var(--spacing-lg);
+                transition: transform 0.3s ease;
+            }
+
+            .stat-card:hover {
+                transform: translateY(-5px);
+                box-shadow: var(--shadow-lg);
+            }
+
+            .stat-icon {
+                width: 60px;
+                height: 60px;
+                border-radius: var(--radius-lg);
+                background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+            }
+
+            .stat-content h3 {
+                font-size: 2rem;
+                margin-bottom: var(--spacing-xs);
+                color: var(--text-primary);
+            }
+
+            .stat-content p {
+                color: var(--text-tertiary);
+                font-size: 0.875rem;
+                margin: 0;
+            }
+
+            .quick-actions {
+                margin-bottom: var(--spacing-2xl);
+            }
+
+            .actions-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                gap: var(--spacing-lg);
+                margin-top: var(--spacing-lg);
+            }
+
+            .action-card {
+                background: white;
+                padding: var(--spacing-xl);
+                border-radius: var(--radius-lg);
+                box-shadow: var(--shadow-md);
+                text-align: center;
+                transition: all 0.3s ease;
+                text-decoration: none;
+                display: block;
+            }
+
+            .action-card:hover {
+                transform: translateY(-5px);
+                box-shadow: var(--shadow-lg);
+                border-color: var(--primary-color);
+            }
+
+            .action-card i {
+                font-size: 2rem;
+                color: var(--primary-color);
+                margin-bottom: var(--spacing-md);
+            }
+
+            .action-card h3 {
+                font-size: 1.125rem;
+                margin-bottom: var(--spacing-sm);
+                color: var(--text-primary);
+            }
+
+            .action-card p {
+                color: var(--text-tertiary);
+                font-size: 0.875rem;
+                margin: 0;
+            }
+
+            .recent-activity {
+                background: white;
+                border-radius: var(--radius-lg);
+                padding: var(--spacing-xl);
+                box-shadow: var(--shadow-md);
+            }
+
+            .activity-list {
+                display: flex;
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+
+            .activity-item {
+                display: flex;
+                gap: var(--spacing-lg);
+                padding: var(--spacing-md);
+                border-radius: var(--radius-md);
+                transition: background 0.3s ease;
+            }
+
+            .activity-item:hover {
+                background: var(--surface-color);
+            }
+
+            .activity-icon {
+                width: 48px;
+                height: 48px;
+                border-radius: var(--radius-md);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.25rem;
+                flex-shrink: 0;
+            }
+
+            .activity-icon.completed {
+                background: rgba(16, 185, 129, 0.1);
+                color: var(--success-color);
+            }
+
+            .activity-icon.in-progress {
+                background: rgba(59, 130, 246, 0.1);
+                color: var(--info-color);
+            }
+
+            .activity-content {
+                flex: 1;
+            }
+
+            .activity-title a {
+                font-weight: 600;
+                color: var(--text-primary);
+                text-decoration: none;
+            }
+
+            .activity-title a:hover {
+                color: var(--primary-color);
+            }
+
+            .activity-details {
+                display: flex;
+                gap: var(--spacing-md);
+                margin-top: var(--spacing-xs);
+                font-size: 0.875rem;
+                color: var(--text-tertiary);
+            }
+
+            .progress-indicator {
+                margin-top: var(--spacing-md);
+            }
+
+            .progress-bar {
+                height: 4px;
+                background: var(--border-color);
+                border-radius: 2px;
+                margin-bottom: var(--spacing-xs);
+                overflow: hidden;
+            }
+
+            .progress-fill {
+                height: 100%;
+                background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+                border-radius: 2px;
+            }
+
+            .empty-state {
+                text-align: center;
+                padding: var(--spacing-2xl);
+                color: var(--text-tertiary);
+            }
+
+            .empty-state i {
+                font-size: 3rem;
+                margin-bottom: var(--spacing-lg);
+                color: var(--border-color);
+            }
+
+            .empty-state h3 {
+                margin-bottom: var(--spacing-sm);
+                color: var(--text-secondary);
+            }
+
+            .empty-state p {
+                margin-bottom: var(--spacing-lg);
+            }
+
+            .progress-filters {
+                display: flex;
+                gap: var(--spacing-md);
+                margin-bottom: var(--spacing-xl);
+                flex-wrap: wrap;
+            }
+
+            .filter-btn {
+                padding: var(--spacing-sm) var(--spacing-lg);
+                border: 2px solid var(--border-color);
+                border-radius: var(--radius-md);
+                background: white;
+                color: var(--text-secondary);
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .filter-btn.active {
+                background: var(--primary-color);
+                color: white;
+                border-color: var(--primary-color);
+            }
+
+            .reading-list {
+                display: flex;
+                flex-direction: column;
+                gap: var(--spacing-xl);
+            }
+
+            .reading-item {
+                background: white;
+                border-radius: var(--radius-lg);
+                overflow: hidden;
+                box-shadow: var(--shadow-md);
+                display: flex;
+            }
+
+            .reading-image {
+                width: 200px;
+                flex-shrink: 0;
+            }
+
+            .reading-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .reading-content {
+                flex: 1;
+                padding: var(--spacing-xl);
+            }
+
+            .reading-header {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: var(--spacing-sm);
+                font-size: 0.875rem;
+            }
+
+            .reading-category {
+                background: rgba(0, 102, 255, 0.1);
+                color: var(--primary-color);
+                padding: var(--spacing-xs) var(--spacing-sm);
+                border-radius: var(--radius-sm);
+                font-weight: 600;
+            }
+
+            .reading-date {
+                color: var(--text-tertiary);
+            }
+
+            .reading-title {
+                font-size: 1.25rem;
+                margin-bottom: var(--spacing-md);
+            }
+
+            .reading-title a {
+                color: var(--text-primary);
+                text-decoration: none;
+            }
+
+            .reading-title a:hover {
+                color: var(--primary-color);
+            }
+
+            .reading-excerpt {
+                color: var(--text-secondary);
+                margin-bottom: var(--spacing-lg);
+            }
+
+            .reading-progress {
+                margin-bottom: var(--spacing-lg);
+            }
+
+            .progress-info {
+                display: flex;
+                justify-content: space-between;
+                margin-top: var(--spacing-xs);
+                font-size: 0.875rem;
+                color: var(--text-tertiary);
+            }
+
+            .reading-actions {
+                display: flex;
+                gap: var(--spacing-md);
+                align-items: center;
+            }
+
+            .btn-icon {
+                background: none;
+                border: none;
+                color: var(--text-tertiary);
+                cursor: pointer;
+                padding: var(--spacing-xs);
+                border-radius: var(--radius-sm);
+            }
+
+            .btn-icon:hover {
+                background: var(--surface-color);
+                color: var(--error-color);
+            }
+
+            .user-dropdown {
+                position: relative;
+            }
+
+            .user-dropdown-toggle {
+                display: flex;
+                align-items: center;
+                gap: var(--spacing-sm);
+                padding: var(--spacing-sm) var(--spacing-md);
+                border-radius: var(--radius-md);
+                cursor: pointer;
+                transition: background 0.3s ease;
+            }
+
+            .user-dropdown-toggle:hover {
+                background: rgba(0, 0, 0, 0.05);
+            }
+
+            .user-avatar-small {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.875rem;
+                font-weight: 600;
+            }
+
+            .user-dropdown-menu {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                background: white;
+                border-radius: var(--radius-md);
+                box-shadow: var(--shadow-lg);
+                min-width: 200px;
+                padding: var(--spacing-sm) 0;
+                display: none;
+                z-index: 1000;
+            }
+
+            .user-dropdown:hover .user-dropdown-menu {
+                display: block;
+            }
+
+            .user-dropdown-menu a {
+                display: flex;
+                align-items: center;
+                gap: var(--spacing-sm);
+                padding: var(--spacing-sm) var(--spacing-lg);
+                color: var(--text-secondary);
+                text-decoration: none;
+                transition: background 0.3s ease;
+            }
+
+            .user-dropdown-menu a:hover {
+                background: var(--surface-color);
+                color: var(--primary-color);
+            }
+
+            .dropdown-divider {
+                height: 1px;
+                background: var(--border-color);
+                margin: var(--spacing-sm) 0;
+            }
+
+            @media (max-width: 1024px) {
+                .dashboard-sidebar {
+                    display: none;
+                }
+
+                .dashboard-main {
+                    margin-left: 0;
+                }
+
+                .stats-cards {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+
+                .reading-item {
+                    flex-direction: column;
+                }
+
+                .reading-image {
+                    width: 100%;
+                    height: 200px;
+                }
+            }
+
+            @media (max-width: 768px) {
+                .dashboard-main {
+                    padding: var(--spacing-lg);
+                }
+
+                .stats-cards {
+                    grid-template-columns: 1fr;
+                }
+
+                .actions-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .user-dropdown-toggle span {
+                    display: none;
+                }
+            }
+        `;
+        document.head.appendChild(dashboardStyles);
+    </script>
+</body>
+</html>
