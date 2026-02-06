@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - Zawadi Careers</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="../assets/zawadi-logo.png" type="image/png">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="logo">
+                    <img src="../assets/zawadi-logo.png" alt="Zawadi Careers Logo">
+                    <span class="logo-text">Zawadi Careers</span>
+                </div>
+                <h1>Welcome Back</h1>
+                <p>Sign in to continue your career journey</p>
+            </div>
+
+            <form id="loginForm" class="auth-form">
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" id="email" class="form-control" required 
+                           placeholder="you@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" class="form-control" required 
+                           placeholder="Enter your password">
+                    <div class="form-helper">
+                        <a href="#forgot-password" class="forgot-password">Forgot password?</a>
+                    </div>
+                </div>
+
+                <div class="form-group form-check">
+                    <input type="checkbox" id="remember" class="form-check-input">
+                    <label for="remember" class="form-check-label">Remember me</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+
+                <div class="auth-divider">
+                    <span>or continue with</span>
+                </div>
+
+                <div class="social-auth">
+                    <button type="button" class="btn-social btn-google">
+                        <i class="fab fa-google"></i> Google
+                    </button>
+                    <button type="button" class="btn-social btn-linkedin">
+                        <i class="fab fa-linkedin"></i> LinkedIn
+                    </button>
+                </div>
+
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="signup.html">Sign up now</a></p>
+                    <p><a href="../public/index.html"><i class="fas fa-arrow-left"></i> Back to home</a></p>
+                </div>
+            </form>
+        </div>
+
+        <div class="auth-benefits">
+            <h2>Benefits of signing in:</h2>
+            <ul class="benefits-list">
+                <li><i class="fas fa-check-circle"></i> Track your reading progress</li>
+                <li><i class="fas fa-check-circle"></i> Save articles for later</li>
+                <li><i class="fas fa-check-circle"></i> Receive personalized recommendations</li>
+                <li><i class="fas fa-check-circle"></i> Comment and engage with community</li>
+                <li><i class="fas fa-check-circle"></i> Get career opportunity alerts</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="../js/supabase.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+            submitBtn.disabled = true;
+
+            try {
+                const { success, error } = await ZawadiAPI.signIn(email, password);
+                
+                if (success) {
+                    // Show success message
+                    const successMsg = document.createElement('div');
+                    successMsg.className = 'alert alert-success';
+                    successMsg.innerHTML = `
+                        <i class="fas fa-check-circle"></i>
+                        <span>Login successful! Redirecting...</span>
+                    `;
+                    document.querySelector('.auth-form').prepend(successMsg);
+                    
+                    // Redirect to dashboard
+                    setTimeout(() => {
+                        window.location.href = 'user-dashboard.html';
+                    }, 1500);
+                } else {
+                    showError(error || 'Invalid email or password');
+                    submitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+                    submitBtn.disabled = false;
+                }
+            } catch (error) {
+                showError('An error occurred. Please try again.');
+                submitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+                submitBtn.disabled = false;
+            }
+        });
+
+        function showError(message) {
+            // Remove existing error
+            const existingError = document.querySelector('.alert-error');
+            if (existingError) existingError.remove();
+            
+            const errorMsg = document.createElement('div');
+            errorMsg.className = 'alert alert-error';
+            errorMsg.innerHTML = `
+                <i class="fas fa-exclamation-circle"></i>
+                <span>${message}</span>
+            `;
+            document.querySelector('.auth-form').prepend(errorMsg);
+        }
+
+        // Add auth page styles
+        const authStyles = document.createElement('style');
+        authStyles.textContent = `
+            .auth-container {
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: var(--spacing-xl);
+                background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+            }
+
+            .auth-card {
+                background: white;
+                border-radius: var(--radius-xl);
+                padding: var(--spacing-2xl);
+                width: 100%;
+                max-width: 480px;
+                box-shadow: var(--shadow-xl);
+            }
+
+            .auth-header {
+                text-align: center;
+                margin-bottom: var(--spacing-2xl);
+            }
+
+            .auth-header .logo {
+                justify-content: center;
+                margin-bottom: var(--spacing-lg);
+            }
+
+            .auth-header h1 {
+                font-size: 2rem;
+                margin-bottom: var(--spacing-sm);
+            }
+
+            .auth-header p {
+                color: var(--text-secondary);
+            }
+
+            .auth-form {
+                margin-bottom: var(--spacing-xl);
+            }
+
+            .form-helper {
+                display: flex;
+                justify-content: flex-end;
+                margin-top: var(--spacing-xs);
+            }
+
+            .forgot-password {
+                font-size: 0.875rem;
+                color: var(--text-tertiary);
+            }
+
+            .auth-divider {
+                display: flex;
+                align-items: center;
+                margin: var(--spacing-xl) 0;
+                color: var(--text-tertiary);
+            }
+
+            .auth-divider::before,
+            .auth-divider::after {
+                content: '';
+                flex: 1;
+                height: 1px;
+                background: var(--border-color);
+            }
+
+            .auth-divider span {
+                padding: 0 var(--spacing-md);
+                font-size: 0.875rem;
+            }
+
+            .social-auth {
+                display: flex;
+                gap: var(--spacing-md);
+                margin-bottom: var(--spacing-xl);
+            }
+
+            .btn-social {
+                flex: 1;
+                padding: var(--spacing-md);
+                border: 2px solid var(--border-color);
+                border-radius: var(--radius-md);
+                background: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: var(--spacing-sm);
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .btn-social:hover {
+                border-color: var(--primary-color);
+                transform: translateY(-2px);
+            }
+
+            .btn-google {
+                color: #DB4437;
+            }
+
+            .btn-linkedin {
+                color: #0077B5;
+            }
+
+            .auth-footer {
+                text-align: center;
+                border-top: 1px solid var(--border-color);
+                padding-top: var(--spacing-xl);
+            }
+
+            .auth-footer p {
+                margin-bottom: var(--spacing-sm);
+                color: var(--text-secondary);
+            }
+
+            .auth-benefits {
+                max-width: 400px;
+                margin-left: var(--spacing-2xl);
+            }
+
+            .benefits-list {
+                list-style: none;
+                padding: 0;
+            }
+
+            .benefits-list li {
+                display: flex;
+                align-items: center;
+                gap: var(--spacing-md);
+                margin-bottom: var(--spacing-lg);
+                color: var(--text-secondary);
+            }
+
+            .benefits-list i {
+                color: var(--success-color);
+                font-size: 1.25rem;
+            }
+
+            .alert {
+                padding: var(--spacing-md);
+                border-radius: var(--radius-md);
+                margin-bottom: var(--spacing-lg);
+                display: flex;
+                align-items: center;
+                gap: var(--spacing-md);
+            }
+
+            .alert-success {
+                background: rgba(16, 185, 129, 0.1);
+                border: 1px solid rgba(16, 185, 129, 0.2);
+                color: var(--success-color);
+            }
+
+            .alert-error {
+                background: rgba(239, 68, 68, 0.1);
+                border: 1px solid rgba(239, 68, 68, 0.2);
+                color: var(--error-color);
+            }
+
+            @media (max-width: 768px) {
+                .auth-container {
+                    flex-direction: column;
+                    padding: var(--spacing-md);
+                }
+
+                .auth-benefits {
+                    margin-left: 0;
+                    margin-top: var(--spacing-2xl);
+                }
+
+                .social-auth {
+                    flex-direction: column;
+                }
+            }
+        `;
+        document.head.appendChild(authStyles);
+    </script>
+</body>
+</html>
