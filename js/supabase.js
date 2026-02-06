@@ -1,43 +1,76 @@
-// Initialize Supabase
+// Supabase Configuration
 // Replace these with your actual Supabase credentials
 const SUPABASE_URL = 'https://vzikbxpvmnjfjzxxzhuo.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6aWtieHB2bW5qZmp6eHh6aHVvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzOTcxNTIsImV4cCI6MjA4NTk3MzE1Mn0.l8jSLctHzPrL0z2oh7-t6L1WYr4vpCWfNu_kQ8lWqT8';
 
-// Check if Supabase is loaded
-if (typeof supabase === 'undefined') {
-    console.error('Supabase client not loaded. Make sure to include the Supabase CDN.');
-    throw new Error('Supabase client not loaded');
+
+// Initialize Supabase client with error handling
+let supabase;
+try {
+    if (typeof window.supabase !== 'undefined') {
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        console.log('Supabase client initialized successfully');
+    } else {
+        console.error('Supabase library not loaded. Make sure to include the Supabase CDN.');
+        // Create a dummy supabase object to prevent errors
+        supabase = {
+            auth: {
+                signUp: () => Promise.reject(new Error('Supabase not loaded')),
+                signInWithPassword: () => Promise.reject(new Error('Supabase not loaded')),
+                signOut: () => Promise.reject(new Error('Supabase not loaded')),
+                getUser: () => Promise.reject(new Error('Supabase not loaded')),
+                getSession: () => Promise.reject(new Error('Supabase not loaded')),
+                resetPasswordForEmail: () => Promise.reject(new Error('Supabase not loaded'))
+            },
+            from: () => ({
+                select: () => Promise.reject(new Error('Supabase not loaded')),
+                insert: () => Promise.reject(new Error('Supabase not loaded')),
+                update: () => Promise.reject(new Error('Supabase not loaded')),
+                delete: () => Promise.reject(new Error('Supabase not loaded'))
+            })
+        };
+    }
+} catch (error) {
+    console.error('Failed to initialize Supabase:', error);
+    // Fallback dummy object
+    supabase = {
+        auth: {},
+        from: () => ({})
+    };
 }
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-// Test connection on load
-(async function testConnection() {
+// Test connection
+async function testConnection() {
     try {
         const { data, error } = await supabase.from('blogs').select('count', { count: 'exact', head: true });
         if (error) {
             console.warn('Supabase connection test failed:', error.message);
-        } else {
-            console.log('Supabase connected successfully');
+            return false;
         }
+        console.log('Supabase connected successfully');
+        return true;
     } catch (error) {
         console.warn('Supabase connection test error:', error.message);
+        return false;
     }
-})();
+}
 
 // Check if user is authenticated
 async function checkAuth() {
     try {
         const { data: { user }, error } = await supabase.auth.getUser();
-        if (error) throw error;
+        if (error) {
+            console.error('Auth check error:', error);
+            return null;
+        }
         return user;
     } catch (error) {
-        console.error('Auth check error:', error);
+        console.error('Auth check exception:', error);
         return null;
     }
 }
 
-// Sign up user with improved error handling
+// Sign up user
 async function signUp(email, password, fullName) {
     try {
         console.log('Starting sign up for:', email);
@@ -212,29 +245,6 @@ async function resetPassword(email) {
     }
 }
 
-// Update user profile
-async function updateProfile(userId, updates) {
-    try {
-        const { error } = await supabase
-            .from('users')
-            .update(updates)
-            .eq('id', userId);
-
-        if (error) throw error;
-        
-        return { 
-            success: true, 
-            message: 'Profile updated successfully!' 
-        };
-    } catch (error) {
-        console.error('Update profile error:', error);
-        return { 
-            success: false, 
-            error: 'Failed to update profile.' 
-        };
-    }
-}
-
 // Subscribe to newsletter
 async function subscribeNewsletter(email, name = '', source = 'website') {
     try {
@@ -337,8 +347,36 @@ async function getCategories() {
     }
 }
 
-// Export all functions
-window.ZawadiAPI = {
+// Initialize and test connection on load
+(async function init() {
+    const connected = await testConnection();
+    if (!connected) {
+        console.warn('Supabase connection failed. Some features may not work.');
+    }
+})();
+
+// Export all functions - SAFE VERSION
+if (typeof window !== 'undefined') {
+    window.ZawadiAPI = {
+        supabase,
+        checkAuth,
+        signUp,
+        signIn,
+        signOut,
+        getSession,
+        resetPassword,
+        subscribeNewsletter,
+        getPublishedBlogs,
+        getCategories,
+        testConnection
+    };
+    console.log('ZawadiAPI initialized and attached to window');
+} else {
+    console.log('ZawadiAPI initialized in non-browser environment');
+}
+
+// Export for ES6 modules if needed
+export {
     supabase,
     checkAuth,
     signUp,
@@ -346,11 +384,8 @@ window.ZawadiAPI = {
     signOut,
     getSession,
     resetPassword,
-    updateProfile,
     subscribeNewsletter,
     getPublishedBlogs,
-    getCategories
+    getCategories,
+    testConnection
 };
-
-// Also export for debugging
-console.log('ZawadiAPI initialized successfully');
