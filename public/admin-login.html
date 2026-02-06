@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Zawadi Careers</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="../assets/zawadi-logo.png" type="image/png">
+</head>
+<body class="admin-body">
+    <div class="admin-login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="logo">
+                    <img src="../assets/zawadi-logo.png" alt="Zawadi Careers Logo">
+                    <span class="logo-text">Zawadi Careers</span>
+                </div>
+                <h1>Admin Portal</h1>
+                <p>Sign in to manage content and analytics</p>
+            </div>
+
+            <form id="adminLoginForm" class="login-form">
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" id="email" class="form-control" required placeholder="admin@zawadicareers.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" class="form-control" required placeholder="Enter your password">
+                </div>
+
+                <div class="form-group form-check">
+                    <input type="checkbox" id="remember" class="form-check-input">
+                    <label for="remember" class="form-check-label">Remember me</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+
+                <div class="login-footer">
+                    <p>For regular user login, <a href="../public/login.html">click here</a></p>
+                </div>
+            </form>
+
+            <div class="login-security">
+                <p><i class="fas fa-shield-alt"></i> Secure admin access only</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/supabase.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+            submitBtn.disabled = true;
+
+            try {
+                const { success, error } = await ZawadiAPI.adminSignIn(email, password);
+                
+                if (success) {
+                    showNotification('Welcome to Admin Dashboard!', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'admin-dashboard.html';
+                    }, 1000);
+                } else {
+                    showNotification(error || 'Invalid credentials', 'error');
+                    submitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+                    submitBtn.disabled = false;
+                }
+            } catch (error) {
+                showNotification('An error occurred. Please try again.', 'error');
+                submitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+                submitBtn.disabled = false;
+            }
+        });
+
+        function showNotification(message, type) {
+            // Simple notification for login page
+            alert(`${type === 'success' ? '✓' : '✗'} ${message}`);
+        }
+    </script>
+</body>
+</html>
